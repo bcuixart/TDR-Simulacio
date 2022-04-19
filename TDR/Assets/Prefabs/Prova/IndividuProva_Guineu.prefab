@@ -1,0 +1,268 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4280200515382032989
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4280200515382032962}
+  - component: {fileID: 4280200515382032990}
+  - component: {fileID: 4280200515382032961}
+  - component: {fileID: 341644842045015943}
+  - component: {fileID: 4280200515382032960}
+  - component: {fileID: 4280200515382032991}
+  m_Layer: 8
+  m_Name: IndividuProva_Guineu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4280200515382032962
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4280200515382032989}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 7060888628582345215}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4280200515382032990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4280200515382032989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b7c483a777b68f42b81e0cd1c554dd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  especieID: 0
+  especie:
+    id: 0
+    nomSingular: 
+    nomPlural: 
+    articleGenere: 0
+    dietaPrimaria: 
+    dietaSecundaria: 
+    dietaTerciaria: 
+    depredadors: 
+    velocitatCaminarBase: 0
+    velocitatCaminarVariacio: 0
+    velocitatCorrerBase: 0
+    velocitatCorrerVariacio: 0
+    tempsAfamacioBase: 0
+    tempsAfamacioVariacio: 0
+    tempsAssedegamentBase: 0
+    tempsAssedegamentVariacio: 0
+    tempsGanesReproduccioBase: 0
+    tempsGanesReproduccioVariacio: 0
+    tempsGestacioBase: 0
+    tempsGestacioVariacio: 0
+    fillsMinims: 0
+    fillsMaxims: 0
+    tempsDesenvolupamentCriesBase: 0
+    tempsDesenvolupamentCriesVariacio: 0
+    desenvolupamentCriesVariacio: 0
+    deteccioBase: 0
+    deteccioVariacio: 0
+    temperaturaBase: 0
+    temperaturaVariacio: 0
+    grups: 0
+    grupsMaxim: 0
+  genoma:
+    genere: 0
+    gens:
+    - nomGen: Velocitat
+      gen: 0
+      exclusivitatGen: 0
+    - nomGen: "Detecci\xF3"
+      gen: 0
+      exclusivitatGen: 0
+    - nomGen: "\xC0nsia reproductiva"
+      gen: 0
+      exclusivitatGen: 0
+    - nomGen: Color
+      gen: 0
+      exclusivitatGen: 0
+    - nomGen: Atractiu
+      gen: 0
+      exclusivitatGen: 1
+    - nomGen: "Gestaci\xF3"
+      gen: 0
+      exclusivitatGen: 2
+  estat: 0
+  gana: 0
+  set: 0
+  ganesDeReproduirse: 0
+  embarassada: 0
+  procesEmbaras: 0
+  fillPrefab: {fileID: 4280200515382032989}
+  ulls: {fileID: 4280200515382032961}
+  agent: {fileID: 4280200515382032960}
+  _renderer: {fileID: 0}
+  parellaActual: {fileID: 0}
+  preparatPerCopular: 0
+--- !u!114 &4280200515382032961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4280200515382032989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f503ca6580dfe9740bd41cac577e8592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  individu: {fileID: 4280200515382032990}
+  distanciaDeVista: 1000
+  angleDeVista: 180
+  menjarMask:
+    serializedVersion: 2
+    m_Bits: 256
+  individusPerReproduirseMask:
+    serializedVersion: 2
+    m_Bits: 256
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  menjarVist: []
+  individusPerReproduirseVistos: []
+--- !u!114 &341644842045015943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4280200515382032989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e756d432aeaa2c4f861b997e4dc2aa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  planta: 0
+  individu: {fileID: 4280200515382032990}
+  copsConsumible: 3
+  ganaQueTreu: 30
+--- !u!195 &4280200515382032960
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4280200515382032989}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 6
+  m_Acceleration: 100
+  avoidancePriority: 50
+  m_AngularSpeed: 360
+  m_StoppingDistance: 1
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1.5
+  m_BaseOffset: 0.465
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!65 &4280200515382032991
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4280200515382032989}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1001 &7383627061983940116
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4280200515382032962}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: e299dd51aae061f4ba9ef7745698ab95,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e299dd51aae061f4ba9ef7745698ab95,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e299dd51aae061f4ba9ef7745698ab95,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e299dd51aae061f4ba9ef7745698ab95,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e299dd51aae061f4ba9ef7745698ab95,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e299dd51aae061f4ba9ef7745698ab95,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e299dd51aae061f4ba9ef7745698ab95,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e299dd51aae061f4ba9ef7745698ab95,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e299dd51aae061f4ba9ef7745698ab95,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e299dd51aae061f4ba9ef7745698ab95,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e299dd51aae061f4ba9ef7745698ab95,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e299dd51aae061f4ba9ef7745698ab95,
+        type: 3}
+      propertyPath: m_Name
+      value: Guineu
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e299dd51aae061f4ba9ef7745698ab95, type: 3}
+--- !u!4 &7060888628582345215 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e299dd51aae061f4ba9ef7745698ab95,
+    type: 3}
+  m_PrefabInstance: {fileID: 7383627061983940116}
+  m_PrefabAsset: {fileID: 0}
