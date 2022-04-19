@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
 
@@ -41,15 +42,15 @@ public class GameManager : MonoBehaviour
         comencat = false;
 
         velocitatTemps = 0;
-
-        if(InformacioSimulacio.instance != null)
-        {
-            info = InformacioSimulacio.instance;
-        }
     }
 
     void Start()
     {
+        if (InformacioSimulacio.instance != null)
+        {
+            info = InformacioSimulacio.instance;
+        }
+
         StartCoroutine(Comencacio());
     }
 
@@ -60,7 +61,7 @@ public class GameManager : MonoBehaviour
         string[] files = Directory.GetFiles(Application.dataPath + "/Especies");
         foreach (string file in files)
         {
-            if (file.Contains(".meta"))
+            if (!file.EndsWith(".json"))
             {
                 continue;
             }
@@ -92,7 +93,7 @@ public class GameManager : MonoBehaviour
         string[] filesCustom = Directory.GetFiles(Application.dataPath + "/StreamingAssets");
         foreach (string file in filesCustom)
         {
-            if (file.Contains("meta"))
+            if (!file.EndsWith(".json"))
             {
                 continue;
             }
@@ -157,6 +158,7 @@ public class GameManager : MonoBehaviour
         }
 
         comencat = true;
+        velocitat = 1;
         velocitatTemps = 1;
         Time.timeScale = 1;
     }
@@ -173,6 +175,19 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Pausa(!pausat);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (Canvas.instance.pausaFons.activeSelf)
+            {
+                Pausa(false);
+            }
+            else
+            {
+                Canvas.instance.pausaFons.SetActive(true);
+                Pausa(true);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -236,13 +251,13 @@ public class GameManager : MonoBehaviour
             individusPersonalitzats[individu.especieID].individus.Add(individu);
 
             dades.nombreIndividusPersonalitzats[individu.especieID]++;
-        }
-        else
-        {
-            individusNormals[individu.especieID].individus.Add(individu);
 
-            dades.nombreIndividusNormals[individu.especieID]++;
+            return;
         }
+
+        individusNormals[individu.especieID].individus.Add(individu);
+
+        dades.nombreIndividusNormals[individu.especieID]++;
     }
 
     public void DesregistrarIndividu(Individu individu)
@@ -252,13 +267,13 @@ public class GameManager : MonoBehaviour
             individusPersonalitzats[individu.especieID].individus.Remove(individu);
 
             dades.nombreIndividusPersonalitzats[individu.especieID]--;
-        }
-        else
-        {
-            individusNormals[individu.especieID].individus.Remove(individu);
 
-            dades.nombreIndividusNormals[individu.especieID]--;
+            return;
         }
+
+        individusNormals[individu.especieID].individus.Remove(individu);
+
+        dades.nombreIndividusNormals[individu.especieID]--;
     }
 
     public void Pausa(bool _p)
@@ -266,6 +281,11 @@ public class GameManager : MonoBehaviour
         pausat = _p;
 
         Time.timeScale = (pausat) ? 0 : velocitatTemps;
+
+        if (!pausat)
+        {
+            Canvas.instance.pausaFons.SetActive(false);
+        }
 
         Canvas.instance.PosarPausa();
     }

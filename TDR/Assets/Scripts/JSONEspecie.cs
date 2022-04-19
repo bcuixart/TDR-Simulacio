@@ -109,7 +109,7 @@ public class JSONEspecie : MonoBehaviour
         string[] files = Directory.GetFiles(Application.dataPath + "/Especies");
         foreach (string file in files)
         {
-            if (file.Contains("meta"))
+            if (!file.EndsWith(".json"))
             {
                 continue;
             }
@@ -146,7 +146,7 @@ public class JSONEspecie : MonoBehaviour
         string[] filesCustom = Directory.GetFiles(Application.dataPath + "/StreamingAssets");
         foreach (string file in filesCustom)
         {
-            if (file.Contains("meta"))
+            if (!file.EndsWith(".json"))
             {
                 continue;
             }
@@ -424,13 +424,13 @@ public class JSONEspecie : MonoBehaviour
             InformacioSimulacio.instance.individusPerFerApareixerNormal[id] += quatitat;
             InformacioSimulacio.instance.individusPerFerApareixerNormal[id] = Mathf.Clamp(InformacioSimulacio.instance.individusPerFerApareixerNormal[id], 0, 100);
             text.text = InformacioSimulacio.instance.individusPerFerApareixerNormal[id].ToString();
+
+            return;
         }
-        else
-        {
-            InformacioSimulacio.instance.individusPerFerApareixerPersonalitzat[id] += quatitat;
-            InformacioSimulacio.instance.individusPerFerApareixerPersonalitzat[id] = Mathf.Clamp(InformacioSimulacio.instance.individusPerFerApareixerPersonalitzat[id], 0, 100);
-            text.text = InformacioSimulacio.instance.individusPerFerApareixerPersonalitzat[id].ToString();
-        }
+
+        InformacioSimulacio.instance.individusPerFerApareixerPersonalitzat[id] += quatitat;
+        InformacioSimulacio.instance.individusPerFerApareixerPersonalitzat[id] = Mathf.Clamp(InformacioSimulacio.instance.individusPerFerApareixerPersonalitzat[id], 0, 100);
+        text.text = InformacioSimulacio.instance.individusPerFerApareixerPersonalitzat[id].ToString();
     }
 
     public void LlistaArxius()

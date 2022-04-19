@@ -35,7 +35,7 @@ public class Individu : MonoBehaviour
     [Header("Components")]
     [SerializeField] UllsIndividu ulls;
     [SerializeField] NavMeshAgent agent;
-    [SerializeField] Renderer _renderer;
+    public Renderer _renderer;
     GameManager gameMana;
 
     [Header("Altres")]
@@ -83,6 +83,17 @@ public class Individu : MonoBehaviour
         if(estat == EstatIndividu.Mort)
         {
             gameObject.layer = LayerMask.NameToLayer("Cadaver");
+
+            if(gameMana.individuSeleccionat == this)
+            {
+                gameMana.individuSeleccionat = null;
+                Canvas.instance.SeleccionarIndividu(null);
+            }
+
+            gameMana.DesregistrarIndividu(this);
+
+            Destroy(gameObject);
+
             return;
         }
 
@@ -99,8 +110,6 @@ public class Individu : MonoBehaviour
         {
             agent.ResetPath();
             estat = EstatIndividu.Mort;
-
-            gameMana.DesregistrarIndividu(this);
 
             return;
         }
@@ -341,8 +350,15 @@ public class Individu : MonoBehaviour
 
     void OnMouseDown()
     {
+        if(gameMana.individuSeleccionat != null)
+        {
+            gameMana.individuSeleccionat.PosarColorSeleccionat(0);
+        }
+
         gameMana.individuSeleccionat = this;
         Canvas.instance.SeleccionarIndividu(this);
+
+        PosarColorSeleccionat(1);
     }
 
     //Això és una funció que utilitzo en el Unity i no és important.
@@ -358,6 +374,11 @@ public class Individu : MonoBehaviour
         new Gen("Atractiu", 0, ExclusivitatGen.Masculí),
         new Gen("Gestació", 0, ExclusivitatGen.Femení),
         };
+    }
+
+    public void PosarColorSeleccionat(float color)
+    {
+        _renderer.material.SetFloat("_EmissionAmount", color);
     }
 
     public static Vector3 TrobarPuntAtzar(Vector3 origen, float radi, int layermask)

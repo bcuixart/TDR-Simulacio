@@ -1,0 +1,12 @@
+16/4/22
+-Arreglat un error que feia que no puguessis tenir més d'una espècie personalitzada. En des-defensa meva diré que era un error molt estúpid.
+-Els individus seleccionats ara fan brilli-brilli per destacar-los.
+-Si apretes [F], la càmera fa un zoom dramático a l'individu seleccionat, si existeix.
+-Arreglat un error que feia que el botó de refrescar gràfics no fes una puta merda.
+-Els individus morts ara desapareixen, igual que el meu papá.
+-Arreglat un error que feia que els individus puguessin registrar-se com a morts diverses vegades, de tal manera que la població baixava més del compte (-1 gallines).
+-Si apretes [ESC] durant una simulació, ara apareix un menú amb el qual pots tornar al menú principal.
+-Arreglats diversos errors relacionats amb pausar i continuar la simulació.
+-Removed Herobrine.
+-Canvis al codi per fer-lo més maco, dins del que cap.
+-Labors d'optimització, principalment relacionades amb la netejació del codi prèviament mencionada (Léase la línea anterior, si es tan amable).

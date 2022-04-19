@@ -112,7 +112,7 @@ MonoBehaviour:
   fillPrefab: {fileID: 4280200515382032989}
   ulls: {fileID: 4280200515382032961}
   agent: {fileID: 4280200515382032960}
-  _renderer: {fileID: 0}
+  _renderer: {fileID: 2159504984197380390}
   parellaActual: {fileID: 0}
   preparatPerCopular: 0
   posicioAtzarSpawn: 0
@@ -300,6 +300,12 @@ PrefabInstance:
 --- !u!4 &2698466234205800450 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ae01a77d03ea27b439f3649494477694,
+    type: 3}
+  m_PrefabInstance: {fileID: 2519862686884589545}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2159504984197380390 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -4683669308469848369, guid: ae01a77d03ea27b439f3649494477694,
     type: 3}
   m_PrefabInstance: {fileID: 2519862686884589545}
   m_PrefabAsset: {fileID: 0}

@@ -13,8 +13,10 @@ public class InformacioSimulacio
     public InformacioSimulacio(int indvs)
     {
         for (int i = 0; i < indvs; i++)
+        {
             individusPerFerApareixerNormal.Add(0);
             individusPerFerApareixerPersonalitzat.Add(0);
+        }
 
         return;
     }

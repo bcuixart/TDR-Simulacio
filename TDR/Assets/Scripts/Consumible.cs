@@ -33,9 +33,6 @@ public class Consumible : MonoBehaviour
             else
             {
                 individu.estat = EstatIndividu.Mort;
-                GameManager.instance.DesregistrarIndividu(individu);
-
-                Destroy(this);
             }
         }
 

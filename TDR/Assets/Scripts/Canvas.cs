@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Canvas : MonoBehaviour
@@ -31,6 +32,9 @@ public class Canvas : MonoBehaviour
     [SerializeField] Slider colorSlider;
     [SerializeField] Slider atractiuSlider;
     [SerializeField] Slider gestacioSlider;
+
+    [Header("Pausa")]
+    public GameObject pausaFons;
 
     [Header("Temps")]
     [SerializeField] GameObject tempsFons;
@@ -68,6 +72,9 @@ public class Canvas : MonoBehaviour
     [SerializeField] Grafic colorGrafic;
     [SerializeField] Grafic atractiuGrafic;
     [SerializeField] Grafic gestacioGrafic;
+
+    int dadesEspecieSeleccionadaID;
+    bool dadesEspecieSeleccionadaPersonalitzada;
 
     void Awake()
     {
@@ -221,6 +228,9 @@ public class Canvas : MonoBehaviour
 
     public void ObrirDadesIndividu(int id, bool personalitzat)
     {
+        dadesEspecieSeleccionadaID = id;
+        dadesEspecieSeleccionadaPersonalitzada = personalitzat;
+
         dadesLlista.SetActive(false);
         dadesEspecie.SetActive(true);
 
@@ -273,13 +283,7 @@ public class Canvas : MonoBehaviour
 
     public void RefrescarGrafic()
     {
-        poblacioGrafic.CrearGrafic();
-        velocitatGrafic.CrearGrafic();
-        deteccioGrafic.CrearGrafic();
-        ansiaReproductivaGrafic.CrearGrafic();
-        colorGrafic.CrearGrafic();
-        gestacioGrafic.CrearGrafic();
-        atractiuGrafic.CrearGrafic();
+        ObrirDadesIndividu(dadesEspecieSeleccionadaID, dadesEspecieSeleccionadaPersonalitzada);
     }
 
     public void DeseleccionarDadesEspecie()
@@ -290,6 +294,7 @@ public class Canvas : MonoBehaviour
 
     public void DeseleccionarIndividu()
     {
+        GameManager.instance.individuSeleccionat._renderer.material.SetFloat("_EmissionAmount", 0);
         GameManager.instance.individuSeleccionat = null;
 
         SeleccionarIndividu(null);
@@ -299,15 +304,19 @@ public class Canvas : MonoBehaviour
     {
         for (int i = 0; i < velocitatImages.Count; i++)
         {
-            if(i == GameManager.instance.velocitat - 1)
+            if (i == GameManager.instance.velocitat - 1)
             {
                 velocitatImages[i].sprite = velocitatSpritesSeleccionat[i];
+                continue;
             }
-            else
-            {
-                velocitatImages[i].sprite = velocitatSpritesNoSeleccionat[i];
-            }
+
+            velocitatImages[i].sprite = velocitatSpritesNoSeleccionat[i];
         }
+    }
+
+    public void UI_Sortir()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void UI_Pausar()
@@ -322,13 +331,13 @@ public class Canvas : MonoBehaviour
         if (!GameManager.instance.pausat)
         {
             PosarVelocitat();
+
+            return;
         }
-        else
+
+        for (int i = 0; i < velocitatImages.Count; i++)
         {
-            for (int i = 0; i < velocitatImages.Count; i++)
-            {
-                velocitatImages[i].sprite = velocitatSpritesNoSeleccionat[i];
-            }
+            velocitatImages[i].sprite = velocitatSpritesNoSeleccionat[i];
         }
     }
 

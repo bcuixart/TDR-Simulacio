@@ -81,6 +81,7 @@ MonoBehaviour:
     temperaturaVariacio: 0
     grups: 0
     grupsMaxim: 0
+  personalitzat: 0
   genoma:
     genere: 0
     gens:
@@ -111,9 +112,10 @@ MonoBehaviour:
   fillPrefab: {fileID: 4280200515382032989}
   ulls: {fileID: 4280200515382032961}
   agent: {fileID: 4280200515382032960}
-  _renderer: {fileID: 0}
+  _renderer: {fileID: 6446808469252266203}
   parellaActual: {fileID: 0}
   preparatPerCopular: 0
+  posicioAtzarSpawn: 0
 --- !u!114 &4280200515382032961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,6 +265,12 @@ PrefabInstance:
 --- !u!4 &7060888628582345215 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e299dd51aae061f4ba9ef7745698ab95,
+    type: 3}
+  m_PrefabInstance: {fileID: 7383627061983940116}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &6446808469252266203 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -4683669308469848369, guid: e299dd51aae061f4ba9ef7745698ab95,
     type: 3}
   m_PrefabInstance: {fileID: 7383627061983940116}
   m_PrefabAsset: {fileID: 0}

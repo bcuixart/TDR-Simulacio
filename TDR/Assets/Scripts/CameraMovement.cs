@@ -21,11 +21,15 @@ public class CameraMovement : MonoBehaviour
     private float yaw = 0f;
     private float pitch = 0f;
 
+    GameManager gameMana;
+
     private void Start()
     {
         // Initialize the correct initial rotation
         this.yaw = this.transform.eulerAngles.y;
         this.pitch = this.transform.eulerAngles.x;
+
+        gameMana = GameManager.instance;
     }
 
     private void Update()
@@ -59,14 +63,12 @@ public class CameraMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            //if (FindObjectOfType<LevelEditor>().selection.Count != 0)
-            //{
-                //GameObject GO = FindObjectOfType<LevelEditor>().selection[0];
-                //if (GO != null)
-                //{
-                   // ZoomTo(GO);
-                //}
-            //}
+            if(gameMana.individuSeleccionat == null)
+            {
+                return;
+            }
+
+            ZoomTo(gameMana.individuSeleccionat.gameObject);
         }
     }
 

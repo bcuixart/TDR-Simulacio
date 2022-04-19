@@ -78,7 +78,6 @@ public class UllsIndividu : MonoBehaviour
 
             if(j == null || j.especieID != individu.especieID || j.estat != EstatIndividu.BuscantParella || j.genoma.genere == individu.genoma.genere || individu.embarassada || j.embarassada)
             {
-                //Debug.Log("He trobat algu que no me toca");
                 continue;
             }
 

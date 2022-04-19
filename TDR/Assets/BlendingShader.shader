@@ -9,6 +9,9 @@
         _FifthTex ("Texture 5", 2D) = "white" {}
         _SixthTex ("Texture 6", 2D) = "white" {}
 
+        _SelectedEmission ("Selected emission color", Color) = (1,1,1,1)
+        _EmissionAmount ("Emission amount", Range(0,1)) = 0
+
         _LerpValue ("Transition Float", Range(-1,1)) = 0
     }
     SubShader
@@ -51,6 +54,8 @@
             float4 _FifthTex_ST;
             sampler2D _SixthTex;
             float4 _SixthTex_ST;
+            fixed4 _SelectedEmission;
+            float _EmissionAmount;
             float _LerpValue;
 
             v2f vert (appdata v)
@@ -66,10 +71,12 @@
             {
                 // sample the texture
                 fixed4 col = lerp(tex2D(_MainTex, i.uv), tex2D(_SecondTex, i.uv), (_LerpValue+1)/2);
+                col.rgb += _SelectedEmission.rgb * _EmissionAmount;
                 // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
                 return col;
             }
+
             ENDCG
         }
     }
