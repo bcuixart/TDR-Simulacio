@@ -114,34 +114,28 @@ public class Individu : MonoBehaviour
             return;
         }
 
+        procesEmbaras += (embarassada) ? 1 : 0;
+
         if (estat != EstatIndividu.Menjant && estat != EstatIndividu.Bevent && estat != EstatIndividu.Copulant)
         {
-            float prioritat = Mathf.Max(gana, set, ganesDeReproduirse);
-            if (prioritat >= 50)
+            if (procesEmbaras >= especie.tempsGestacioBase + especie.tempsGestacioVariacio * genoma.gens[4].gen)
             {
-                if (prioritat == gana)
-                {
-                    estat = EstatIndividu.BuscantMenjar;
-                }
-                else if (prioritat == set)
-                {
-                    estat = EstatIndividu.BuscantAigua;
-                }
-                else if (prioritat == ganesDeReproduirse)
-                {
-                    estat = EstatIndividu.BuscantParella;
-                }
+                estat = EstatIndividu.DonantALlum;
             }
             else
             {
-                estat = EstatIndividu.Normal;
+                float prioritat = Mathf.Max(gana, set);
+                if (prioritat >= 50)
+                {
+                    if (prioritat == gana) { estat = EstatIndividu.BuscantMenjar; }
+                    else if (prioritat == set) { estat = EstatIndividu.BuscantAigua; }
+                }
+                else
+                {
+                    if (ganesDeReproduirse >= 50) { estat = EstatIndividu.BuscantParella; }
+                    else { estat = EstatIndividu.Normal; }
+                }
             }
-        }
-
-        procesEmbaras += (embarassada) ? 1 : 0;
-        if (procesEmbaras >= especie.tempsGestacioBase + especie.tempsGestacioVariacio * genoma.gens[4].gen)
-        {
-            estat = EstatIndividu.DonantALlum;
         }
 
         switch (estat)

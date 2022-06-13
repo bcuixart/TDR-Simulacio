@@ -1,3 +1,23 @@
+25/4/22
+-Canvi color cel
+-Canvi color herba
+-Canvi color plantes
+-Canvi color aigua
+-Canvi color gallines
+-Canvi color guineus
+-Canvi disseny botons/interfície
+-Canvi color interfície
+-Canvi fons menús
+-Canvi color textos
+-Ordenat el codi
+-Canvi en les prioritats dels animals: les ganes de reproduir-se mai no tindran prioritat sobre la gana i la set.
+-Canvi en el comportament dels animals: acabar la gestació no interromp altres accions.
+-Si es manté [Shift] al canviar el nombre d'individus d'una espècie, canvia de 5 en 5. Si es manté [Control], canvia de 10 en 10. Si es mantenen [Shift] i [Control], canvia de 50 en 50. Això s'aplica tant a l'afegir com al treure individus.
+-Canviat molts noms d'arxius per eliminar-lis "Prova"
+-La càmera ara s'arrosega i fa zoom al doble de velocitat
+-Petits canvis a l'interfície del menú principal
+-S'ha afegit un botó per tornar al menú principal en el menú de configuració de la simulació
+
 16/4/22
 -Arreglat un error que feia que no puguessis tenir més d'una espècie personalitzada. En des-defensa meva diré que era un error molt estúpid.
 -Els individus seleccionats ara fan brilli-brilli per destacar-los.

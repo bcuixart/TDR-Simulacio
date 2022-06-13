@@ -84,6 +84,7 @@ public class JSONEspecie : MonoBehaviour
 
     bool potGuardar;
     bool devMode;
+    int multiplicadorAfegirEspecies;
 
     void Start()
     {
@@ -186,6 +187,18 @@ public class JSONEspecie : MonoBehaviour
 
     void Update()
     {
+        multiplicadorAfegirEspecies = 1;
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            multiplicadorAfegirEspecies += 4;
+        }
+
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            multiplicadorAfegirEspecies *= 10;
+        }
+
         if (Input.GetKeyDown(KeyCode.P))
         {
             devMode = true;
@@ -196,6 +209,11 @@ public class JSONEspecie : MonoBehaviour
     public void Comencar()
     {
         SceneManager.LoadScene("Simulacio");
+    }
+
+    public void TornarMenuPrincipal()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void NovaEspecie()
@@ -421,14 +439,14 @@ public class JSONEspecie : MonoBehaviour
     {
         if (normal)
         {
-            InformacioSimulacio.instance.individusPerFerApareixerNormal[id] += quatitat;
+            InformacioSimulacio.instance.individusPerFerApareixerNormal[id] += quatitat * multiplicadorAfegirEspecies;
             InformacioSimulacio.instance.individusPerFerApareixerNormal[id] = Mathf.Clamp(InformacioSimulacio.instance.individusPerFerApareixerNormal[id], 0, 100);
             text.text = InformacioSimulacio.instance.individusPerFerApareixerNormal[id].ToString();
 
             return;
         }
 
-        InformacioSimulacio.instance.individusPerFerApareixerPersonalitzat[id] += quatitat;
+        InformacioSimulacio.instance.individusPerFerApareixerPersonalitzat[id] += quatitat * multiplicadorAfegirEspecies;
         InformacioSimulacio.instance.individusPerFerApareixerPersonalitzat[id] = Mathf.Clamp(InformacioSimulacio.instance.individusPerFerApareixerPersonalitzat[id], 0, 100);
         text.text = InformacioSimulacio.instance.individusPerFerApareixerPersonalitzat[id].ToString();
     }

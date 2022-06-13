@@ -36,7 +36,7 @@ public class UllsIndividu : MonoBehaviour
         {
             Transform menjar = menjarEnElRadiDeVista[i].transform;
 
-            if (menjar.gameObject.layer == LayerMask.NameToLayer("Animal"))
+            if (menjar.gameObject.layer == LayerMask.NameToLayer("Animal")) //Mirar si és un animal.
             {
                 string nomMenjar = menjar.name;
                 nomMenjar = nomMenjar.Replace("Especie_", "");
@@ -45,10 +45,11 @@ public class UllsIndividu : MonoBehaviour
 
                 if (menjar == transform || !individu.especie.dietaPrimaria.Contains(menjarID))
                 {
-                    continue;
+                    continue; //Si es determina que aquest animal no forma part de la dieta, no s'afegeix.
                 }
             }
 
+            //Si es segueix (plantes automàticament en herbívors o animals vàlids en carnívors)
             Vector3 posicioMenjar = new Vector3(menjar.position.x, transform.position.y, menjar.position.z);
 
             Vector3 direccioAlMenjar = (posicioMenjar - transform.position).normalized;
@@ -59,6 +60,7 @@ public class UllsIndividu : MonoBehaviour
 
                 if (!Physics.Raycast(transform.position, direccioAlMenjar, dst, obstacleMask))
                 {
+                    //Donat que s'estigui mirant el menjar, s'afegeix a la llista de menjars vistos.
                     menjarVist.Add(menjar);
                 }
             }
@@ -97,6 +99,7 @@ public class UllsIndividu : MonoBehaviour
         }
     }
 
+    //No sé què és això. Et tinc clissat, nenet...
     public Vector3 DirFromAngle(float angle, bool angleIsGlobal)
     {
         if (!angleIsGlobal)
