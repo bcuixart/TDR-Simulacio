@@ -12,32 +12,75 @@ public class GameManager : MonoBehaviour
     [Header("Informacio")]
     public InformacioSimulacio info;
 
+    [Header("ADN")]
+    public ADN adn;
+
     [Header("Llista d'individus")]
     public List<Individus> individusNormals;
     public List<Individus> individusPersonalitzats;
     public List<Planta> plantes = new List<Planta>();
+    public int maximPlantes = 100;
+
+    Individu primerIndividuPerInfectar;
 
     [Header("Especies")]
     public List<ParametresEspecie> especiesNormals = new List<ParametresEspecie>();
     public List<ParametresEspecie> especiesPersonalitzades = new List<ParametresEspecie>();
 
+    [Header("Virus")]
+    [SerializeField] GameObject virusPosicioFixa;
+
     [Header("Temps")]
     public bool pausat;
+    public bool arribatTempsMaxim;
     public int velocitat;
     [SerializeField] float velocitatTemps;
     public float elapsed;
+    [SerializeField] Animator solAnim;
+    [SerializeField] GameObject eventMeteorit;
+    [SerializeField] Material celNormal;
+    [SerializeField] Material celMeteorit;
 
     [Header("Prefabs individus")]
     public List<GameObject> individusPrefabs;
     public GameObject individuPersonalitzatPrefab;
+    [SerializeField] GameObject plantaPrefab;
+    [SerializeField] Transform plantaPrefabBase;
     
     [HideInInspector] public Individu individuSeleccionat;
     public bool comencat = false;
+    public bool meteorit;
+    [SerializeField] bool optimitzacioDesesperada;
 
     DadesManager dades;
 
+    public static float probabilitatSalt;
+
     void Awake()
     {
+        virusPosicioFixa.SetActive(false);
+
+        if (InformacioSimulacio.instance != null)
+        {
+            info = InformacioSimulacio.instance;
+        }
+
+        if (!info.finalitzada)
+        {
+            int s = Random.Range(0, 101);
+            info.randomSeed = s;
+
+            info.dataCreacio = System.DateTime.Now.ToString();
+        }
+        else
+        {
+            info.tempsMaxim = info.tempsTotal;
+        }
+
+        Random.InitState(info.randomSeed);
+
+        adn = new ADN(info.randomSeed);
+
         instance = this;
         comencat = false;
 
@@ -46,11 +89,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        if (InformacioSimulacio.instance != null)
-        {
-            info = InformacioSimulacio.instance;
-        }
-
         StartCoroutine(Comencacio());
     }
 
@@ -79,6 +117,7 @@ public class GameManager : MonoBehaviour
 
                 dades.dades.especiesNormals.Add(new DadesEspecie(id, parametres.nomSingular));
                 dades.nombreIndividusNormals.Add(0);
+                dades.nombreIndividusNormalsInfectats.Add(0);
 
                 stream.Close();
 
@@ -111,6 +150,7 @@ public class GameManager : MonoBehaviour
 
                 dades.dades.especiesPersonalitzades.Add(new DadesEspecie(id, parametres.nomSingular));
                 dades.nombreIndividusPersonalitzats.Add(0);
+                dades.nombreIndividusPersonalitzatsInfectats.Add(0);
 
                 stream.Close();
 
@@ -126,13 +166,18 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 0; j < info.individusPerFerApareixerNormal[i]; j++)
             {
-                GameObject GO = Instantiate(individusPrefabs[i], Vector3.zero, Quaternion.identity);
+                GameObject GO = Instantiate(individusPrefabs[i]);
                 Individu ind = GO.GetComponent<Individu>();
                 ind.especieID = i;
                 ind.posicioAtzarSpawn = true;
                 GO.name = "Especie_" + i.ToString();
 
                 ind.genoma.genere = (j > ((info.individusPerFerApareixerNormal[i] - 1) / 2)) ? Genere.Femení : Genere.Masculí;
+
+                if(primerIndividuPerInfectar == null && i != 0)
+                {
+                    primerIndividuPerInfectar = ind;
+                }
             }
 
             yield return null;
@@ -158,19 +203,50 @@ public class GameManager : MonoBehaviour
         }
 
         comencat = true;
+
         velocitat = 1;
         velocitatTemps = 1;
         Time.timeScale = 1;
+
+        AfegirNotificacio(new Notificacio(TipusNotificacio.IniciSimulacio, 0, "", 0));
+
+        if (info.tempsMaxim != -1)
+        {
+            Invoke("TempsMaxim", info.tempsMaxim);
+        }
+
+        InvokeRepeating("IntentFerApareixerPlanta", 15, 15);
+
+        yield return new WaitForSeconds(30);
+
+        if(primerIndividuPerInfectar != null)
+        {
+            primerIndividuPerInfectar.Infectar();
+        }
+
+        yield return null;
+
+        virusPosicioFixa.SetActive(true);
     }
 
     void Update()
     {
-        if (!comencat)
+        if(Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.P))
+        {
+            Menu.devMode = true;
+            Canvas.instance.botoDevModeRepeticio.SetActive(true);
+            Canvas.instance.devModeIndicador.SetActive(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F11))
+        {
+            Screen.fullScreen = !Screen.fullScreen;
+        }
+
+        if (!comencat || meteorit)
         {
             return;
         }
-
-        elapsed += Time.deltaTime;
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -214,6 +290,31 @@ public class GameManager : MonoBehaviour
         {
             PosarVelocitat(5);
         }
+
+        if (Input.GetKeyDown(KeyCode.I) && Menu.devMode)
+        {
+            if(individuSeleccionat == null)
+            {
+                return;
+            }
+
+            individuSeleccionat.particulesVirus.SetActive(true);
+            individuSeleccionat.infectat = true;
+
+            RegistrarInfectat(individuSeleccionat);
+        }
+
+        if (Input.GetKeyDown(KeyCode.O) && Menu.devMode)
+        {
+            OptimitzacioDesesperada();
+        }
+
+        if (arribatTempsMaxim)
+        {
+            return;
+        }
+
+        elapsed += Time.deltaTime;
     }
 
     public void PosarVelocitat(int vel)
@@ -268,12 +369,80 @@ public class GameManager : MonoBehaviour
 
             dades.nombreIndividusPersonalitzats[individu.especieID]--;
 
+            if(dades.nombreIndividusPersonalitzats[individu.especieID] == 0)
+            {
+                AfegirNotificacio(new Notificacio(TipusNotificacio.Extincio, elapsed, individu.especie.nomPlural.ToLower(), (int)individu.especie.articleGenere));
+            }
+
             return;
         }
 
         individusNormals[individu.especieID].individus.Remove(individu);
 
         dades.nombreIndividusNormals[individu.especieID]--;
+
+        if (dades.nombreIndividusNormals[individu.especieID] == 0)
+        {
+            AfegirNotificacio(new Notificacio(TipusNotificacio.Extincio, elapsed, individu.especie.nomPlural.ToLower(), (int)individu.especie.articleGenere));
+        }
+    }
+
+    public void RegistrarInfectat(Individu individu)
+    {
+        if (individu.personalitzat)
+        {
+            dades.nombreIndividusPersonalitzatsInfectats[individu.especieID]++;
+
+            if(dades.nombreIndividusPersonalitzatsInfectats[individu.especieID] == 1)
+            {
+                AfegirNotificacio(new Notificacio(TipusNotificacio.PrimerInfectat, elapsed, individu.especie.nomSingular, (int) individu.especie.articleGenere));
+            }
+
+            return;
+        }
+
+        dades.nombreIndividusNormalsInfectats[individu.especieID]++;
+
+        if (dades.nombreIndividusNormalsInfectats[individu.especieID] == 1)
+        {
+            AfegirNotificacio(new Notificacio(TipusNotificacio.PrimerInfectat, elapsed, individu.especie.nomSingular.ToLower(), (int)individu.especie.articleGenere));
+        }
+    }
+
+    public void DesregistrarInfectat(Individu individu)
+    {
+        if (individu.personalitzat)
+        {
+            dades.nombreIndividusPersonalitzatsInfectats[individu.especieID]--;
+
+            return;
+        }
+
+        dades.nombreIndividusNormalsInfectats[individu.especieID]--;
+    }
+
+    public void IntentFerApareixerPlanta()
+    {
+        int probabilitat = Random.Range(1, maximPlantes + 1);
+        if(probabilitat <= plantes.Count)
+        {
+            return;
+        }
+
+        GameObject GO = Instantiate(plantaPrefab, plantaPrefabBase);
+        Planta p = GO.GetComponent<Planta>();
+
+        GO.name = plantaPrefab.name;
+        p.posicioAtzarSpawn = true;
+    }
+
+    public void TempsMaxim()
+    {
+        arribatTempsMaxim = true;
+
+        AfegirNotificacio(new Notificacio(TipusNotificacio.FinalSimulacioTempsMaxim, info.tempsMaxim, "", 0));
+
+        solAnim.speed = 0;
     }
 
     public void Pausa(bool _p)
@@ -288,6 +457,98 @@ public class GameManager : MonoBehaviour
         }
 
         Canvas.instance.PosarPausa();
+    }
+
+    public void AfegirNotificacio(Notificacio not)
+    {
+        info.notificacions.Add(not);
+
+        Canvas.instance.NovaNotificacio(not);
+    }
+
+    public void SortirGuardarSimulacio()
+    {
+        if (string.IsNullOrWhiteSpace(info.ubicacioSimulacio) || info.finalitzada)
+        {
+            return;
+        }
+
+        if (!arribatTempsMaxim)
+        {
+            AfegirNotificacio(new Notificacio(TipusNotificacio.FinalSimulacioArbitrari, elapsed, "", 0));
+        }
+
+        if (!info.finalitzada)
+        {
+            StartCoroutine(EventMeteorit());
+        }
+
+        info.finalitzada = true;
+        info.tempsTotal = elapsed;
+
+        info.dades = dades.dades;
+
+        using (StreamWriter stream = new StreamWriter(info.ubicacioSimulacio))
+        {
+            string s = JsonUtility.ToJson(info, true);
+
+            stream.Write(s);
+
+            stream.Close();
+        }
+
+        Time.timeScale = 1;
+    }
+
+    void OptimitzacioDesesperada()
+    {
+        optimitzacioDesesperada = !optimitzacioDesesperada;
+
+        Renderer[] renderers = FindObjectsOfType<Renderer>();
+        foreach (Renderer r in renderers)
+        {
+            r.enabled = !optimitzacioDesesperada;
+        }
+    }
+
+    public IEnumerator EventMeteorit()
+    {
+        meteorit = true;
+
+        Pausa(false);
+        PosarVelocitat(1);
+
+        eventMeteorit.SetActive(true);
+
+        Light l = solAnim.GetComponent<Light>();
+        Color c = new Color32(128, 3, 3, 255);
+        RenderSettings.skybox = celMeteorit;
+
+        float t = 0;
+        while (t < 5)
+        {
+            t += Time.deltaTime;
+            l.color = Color.Lerp(Color.white, c, t/5);
+            l.intensity = Mathf.Lerp(0.5f, 1, t/5);
+
+            yield return null;
+        }
+
+        for (int i = 0; i < individusNormals.Count; i++)
+        {
+            for (int j = 0; j < individusNormals[i].individus.Count; j++)
+            {
+                Destroy(individusNormals[i].individus[j].gameObject);
+            }
+        }
+
+        Destroy(GameObject.Find("Decoracions"));
+        Destroy(GameObject.Find("Plantitas"));
+
+        yield return new WaitForSeconds(10);
+
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Menu");
     }
 }
 

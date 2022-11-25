@@ -9,19 +9,44 @@ public class Planta : MonoBehaviour
     [SerializeField] Transform prefabParent;
 
     [Space]
-    [SerializeField] float tempsMinimReproduccio;
-    [SerializeField] float tempsMaximReproduccio;
+    public float tempsMinimReproduccio;
+    public float tempsMaximReproduccio;
 
     [Space]
-    [SerializeField] int fillsMinim;
-    [SerializeField] int fillsMaxim;
+    public int fillsMinim;
+    public int fillsMaxim;
 
-    void Start()
+    public bool posicioAtzarSpawn;
+
+    GameManager gameMana;
+
+    IEnumerator Start()
     {
-        float temps = Random.Range(tempsMinimReproduccio, tempsMaximReproduccio);
-        InvokeRepeating("Reproduirse", temps, temps);
+        gameMana = GameManager.instance;
 
-        GameManager.instance.plantes.Add(this);
+        prefabParent = transform.parent;
+
+        Random.InitState(gameMana.info.randomSeed);
+
+        gameMana.plantes.Add(this);
+
+        yield return new WaitUntil(() => gameMana.comencat);
+
+        if (posicioAtzarSpawn)
+        {
+            Vector3 pos = TrobarPuntAtzar(Vector3.zero, 20, 0);
+            transform.position = pos;
+
+            fillsMinim = 2;
+            fillsMaxim = 10;
+
+            Reproduirse();
+
+            yield break;
+        }
+
+        float temps = Random.Range(tempsMinimReproduccio, tempsMaximReproduccio);
+        Invoke("Reproduirse", temps);
     }
 
     void Update()
@@ -31,12 +56,12 @@ public class Planta : MonoBehaviour
 
     void OnDestroy()
     {
-        GameManager.instance.plantes.Remove(this);
+        gameMana.plantes.Remove(this);
     }
 
     void Reproduirse()
     {
-        if(GameManager.instance.plantes.Count >= 100)
+        if(gameMana.plantes.Count >= gameMana.maximPlantes || gameMana.arribatTempsMaxim)
         {
             return;
         }
@@ -45,12 +70,20 @@ public class Planta : MonoBehaviour
 
         for (int i = 0; i < fills; i++)
         {
-            Vector3 pos = TrobarPuntAtzar(transform.position, 20, -1);
+            if (gameMana.plantes.Count >= gameMana.maximPlantes)
+            {
+                return;
+            }
+
+            Vector3 pos = TrobarPuntAtzar(transform.position, 20, 0);
 
             GameObject GO = Instantiate(prefab, pos, Quaternion.identity, prefabParent);
             GO.name = transform.name;
 
-            GO.transform.position = new Vector3(GO.transform.position.x, transform.position.y, GO.transform.position.z);
+            if (posicioAtzarSpawn)
+            {
+                GO.GetComponent<Planta>().posicioAtzarSpawn = false;
+            }
         }
     }
 
@@ -62,7 +95,7 @@ public class Planta : MonoBehaviour
 
         NavMeshHit navHit;
 
-        NavMesh.SamplePosition(randomDirection, out navHit, radi, layermask);
+        NavMesh.SamplePosition(randomDirection, out navHit, radi * 2, NavMesh.GetAreaFromName("Sorra"));
 
         return navHit.position;
     }

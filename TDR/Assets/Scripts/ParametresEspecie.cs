@@ -16,45 +16,25 @@ public class ParametresEspecie
     public ArticleGenere articleGenere;
 
     [Space]
-    public List<int> dietaPrimaria;
-    public List<int> dietaSecundaria;
-    public List<int> dietaTerciaria;
-    public List<int> depredadors;
+    public List<int> dietaNormal;
+    public List<int> dietaPersonalitzada;
 
     [Space]
-    public float velocitatCaminarBase;
-    public float velocitatCaminarVariacio;
-    public float velocitatCorrerBase;
-    public float velocitatCorrerVariacio;
-    public float tempsAfamacioBase;
-    public float tempsAfamacioVariacio;
-    public float tempsAssedegamentBase;
-    public float tempsAssedegamentVariacio;
+    public float velocitat;
+    public float tempsAfamacio;
+    public float tempsAssedegament;
 
     [Space]
-    public float tempsGanesReproduccioBase;
-    public float tempsGanesReproduccioVariacio;
-    public float tempsGestacioBase;
-    public float tempsGestacioVariacio;
+    public float tempsGanesReproduccio;
+    public float tempsGestacio;
     public int fillsMinims;
     public int fillsMaxims;
 
     [Space]
-    public float tempsDesenvolupamentCriesBase;
-    public float tempsDesenvolupamentCriesVariacio;
-    public float desenvolupamentCriesVariacio;
+    public float probabilitatInfeccio;
 
     [Space]
-    public float deteccioBase;
-    public float deteccioVariacio;
-
-    [Space]
-    public float temperaturaBase;
-    public float temperaturaVariacio;
-
-    [Space]
-    public bool grups;
-    public int grupsMaxim;
+    public float tempsDesenvolupamentCries;
 
     public ParametresEspecie(int _id, string _nomS, string _nomP)
     {

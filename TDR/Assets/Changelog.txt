@@ -1,3 +1,16 @@
+16/4/22
+-Arreglat un error que feia que no puguessis tenir més d'una espècie personalitzada. En des-defensa meva diré que era un error molt estúpid.
+-Els individus seleccionats ara fan brilli-brilli per destacar-los.
+-Si apretes [F], la càmera fa un zoom dramático a l'individu seleccionat, si existeix.
+-Arreglat un error que feia que el botó de refrescar gràfics no fes una puta merda.
+-Els individus morts ara desapareixen, igual que el meu papá.
+-Arreglat un error que feia que els individus puguessin registrar-se com a morts diverses vegades, de tal manera que la població baixava més del compte (-1 gallines).
+-Si apretes [ESC] durant una simulació, ara apareix un menú amb el qual pots tornar al menú principal.
+-Arreglats diversos errors relacionats amb pausar i continuar la simulació.
+-Removed Herobrine.
+-Canvis al codi per fer-lo més maco, dins del que cap.
+-Labors d'optimització, principalment relacionades amb la netejació del codi prèviament mencionada (Léase la línea anterior, si es tan amable).
+
 25/4/22
 -Canvi color cel
 -Canvi color herba
@@ -11,22 +24,193 @@
 -Canvi color textos
 -Ordenat el codi
 -Canvi en les prioritats dels animals: les ganes de reproduir-se mai no tindran prioritat sobre la gana i la set.
--Canvi en el comportament dels animals: acabar la gestació no interromp altres accions.
+-Canvi en el comportament dels animals: acabar la gestació no interromp altres accions com menjar o copular.
 -Si es manté [Shift] al canviar el nombre d'individus d'una espècie, canvia de 5 en 5. Si es manté [Control], canvia de 10 en 10. Si es mantenen [Shift] i [Control], canvia de 50 en 50. Això s'aplica tant a l'afegir com al treure individus.
--Canviat molts noms d'arxius per eliminar-lis "Prova"
+-Canviat molts noms d'arxius per eliminar-los "Prova"
 -La càmera ara s'arrosega i fa zoom al doble de velocitat
 -Petits canvis a l'interfície del menú principal
 -S'ha afegit un botó per tornar al menú principal en el menú de configuració de la simulació
 
-16/4/22
--Arreglat un error que feia que no puguessis tenir més d'una espècie personalitzada. En des-defensa meva diré que era un error molt estúpid.
--Els individus seleccionats ara fan brilli-brilli per destacar-los.
--Si apretes [F], la càmera fa un zoom dramático a l'individu seleccionat, si existeix.
--Arreglat un error que feia que el botó de refrescar gràfics no fes una puta merda.
--Els individus morts ara desapareixen, igual que el meu papá.
--Arreglat un error que feia que els individus puguessin registrar-se com a morts diverses vegades, de tal manera que la població baixava més del compte (-1 gallines).
--Si apretes [ESC] durant una simulació, ara apareix un menú amb el qual pots tornar al menú principal.
--Arreglats diversos errors relacionats amb pausar i continuar la simulació.
--Removed Herobrine.
--Canvis al codi per fer-lo més maco, dins del que cap.
--Labors d'optimització, principalment relacionades amb la netejació del codi prèviament mencionada (Léase la línea anterior, si es tan amable).
+14/7/22
+-S'han eliminat tots els gens, excepte el de color.
+-S'ha afegit un nou gen, el de salut. De moment no fa res.
+-S'ha eliminat paràmetres d'espècie innecessaris, com ara la variació dels gens eliminats.
+-Canvis als colors i als materials de l'escenari.
+-El sol ara gira.
+
+15/7/22
+-Després de tants anys, el gen de color ja funciona.
+-El sol ara gira a una velocitat considerablement més raonable. Abans era 1 minut per volta, ara son 10 minuts per volta.
+-L'usuari ara pot triar la probabilitat de mutació des del menú abans de començar la simulació.
+-S'han canviat els .json de les espècies conforme els canvis fets ahir als paràmetres.
+-Per fi... les gallines estan animades!
+-S'ha simplificat bastant la manera en què els animals veuen el seu entorn, tot optimitzant el programa.
+-Això ha permès augmentar el radi de vista dels animals, cosa que ha fet que passi molt més temps en les simulacions abans de que morin tots els animals.
+-Petits canvis a l'interfície, principalment, canvis de color als textos que representen el color de les barres dels gràfics de gens.
+
+31/7/22
+-L'escenari ha canviat completament.
+-S'han afegit arbres.
+
+1/8/22
+-S'han afegit palmeres.
+-S'han afegit roques.
+-S'han afegit onades al mar.
+
+2/8/22
+-Les plantes per fi ja no són cubs, ara hi ha dos models de plantes.
+-Ara cada planta només es pot reproduir un cop.
+-Les plantes no es reprodueixen a la sorra. Aquesta informació és totalment innecessària però em feia il·lusió compartir-la de totes formes perquè aconseguir-ho no ha sigut tan fàcil com qualsevol persona pugués haver assumit donada la simplesa i estupidesa d'aquest fet.
+-Ara hi ha un virus a una zona de l'escenari. Es pot veure aquesta zona ja que emet partícules.
+-Si un animal s'acosta prou a aquest virus, s'infecta. Llavors, l'animal comença a emetre partícules iguals.
+-Si un altre animal s'hi acosta, també s'infecta.
+-L'usuari pot veure en el gràfic de dades d'espècie el nombre d'infectats.
+-Quan un individu es reprodueix, el fill deixa de tenir el mateix nivell de gana, set i ganes de reproducció que el progenitor.
+-A més, quan un individu neix, té un temps en què és immune al virus, que està dictat pel paràmetre d'espècie "Temps desenvolupament cries".
+
+15/8/22
+-Els individus al néixer són molt petits i van creixent conforme el paràmetre d'espècie "Temps desenvolupament cries".
+
+25/8/22
+-El menú principal s'ha redissenyat completament amb un nou estil simplista i minimilista i a més preciós.
+-La funcionalitat de diverses escenes independents s'ha fusionat en una sola escena, que és el nou menú principal.
+-En el nou menú principal el fons és l'escenari de les simulacions i la càmera va girant. També hi ha cicle de dia i nit.
+-S'han fet preparacions per poder guardar les dades de les simulacions en carpetes.
+
+26/8/22
+-Canvis en la interfície de la simulació.
+
+27/8/22
+-Canvis finalitzats en la interfície de la simulació.
+-El gen de color ja no existeix, ara la salut es mostra amb el color de l'individu.
+-S'han eliminat totes les referencies en el codi del gen de color.
+
+28/8/22
+-Les guineus ja estan animades.
+
+29/8/22
+-Més canvis a la interfície.
+-S'ha re-fet el sistema d'editar espècies per fer-lo més intuitiu i amb una nova i objectivament millor interfície.
+-Preparacions per poder esborrar espècies.
+-Canvi a l'escenari per impedir que els animals puguin aparèixer a les roques i per culpa d'això no poder moure's correctament.
+-S'ha fet un model de conill, però l'espècie no està implementada encara perquè...
+-S'han fet canvis al MODO DESARROLLADOR. S'activa apretant Shift+P en el menú (Això és un secret, no ho diguis a ningú!). Permet editar i afegir espècies predeterminades. Força útil, saps, per un DESARROLLADOR que vol implementar més espècies.
+-A més, per fer-ho encara més molón, si s'activa el MODO DESARROLLADOR, apareix un text a la vora superior dreta de la pantalla que ho indica juntament amb unes ulleres de sol molt xupis. Qui ho veurà això? Ningú. Només jo. Però és molón.
+-Diversos paràmetres d'espècie que no s'utilitzaven per res s'han fet encara més obsolets, tot amagant-los de la nova interfície. Seran eliminats en els propers dies. Els més notoris són el temps d'assedegament i la distància de vista. No servien per res, arribats a aquest punt casi millor els eliminem i s'acabó.
+
+31/8/22
+-Ara es poden esborrar espècies personalitzades. El programa és fins i tot tan amable que et pregunta si estàs segur de voler esborrar-ne una.
+-Recordes per casualitat allò de certs paràmetres obsolets que calia eliminar? Avui hi ha hagut LA PURGA de paràmetres. S'han eliminat la dieta secundària, terciària, depredadors, grups, distància de vista, entre d'altres.
+-S'ha afegit el comportament dels conills. Es reprodueixen cada molt poc i tenen entre 5 i 10 fills per gestació. Les guineus mengen conills.
+-Si un individu seleccionat té fills, els fills ja no brillaran com si estiguessin seleccionats.
+
+1/9/22
+-El botó de començar simulació ja funciona. Curiós com no me n'havia adonat fins ara.
+-Més canvis a la interfície! Avui el menú de pausa de la simulació.
+-Quan crees una simulació, es genera una seed entre 0 i 100. Aquesta dictarà l'aleatorietat i es guardarà en l'arxiu de dades. Això permetrà, essencialment, re-reproduir simulacions acabades sense haver de guardar milions de dades com la posicio dels individus en cada moment, etc.
+
+6/9/22
+-Els conills ja estan animats.
+-La càmera ara es pot moure inclús si el temps està aturat.
+-Canvis als tamanys de la zona on s'ha de fer clic per seleccionar els animals per adequar-los més al model de l'espècie.
+-Canvi a la detecció de colisió amb el virus: ara es fa sempre que s'estigui a una zona amb virus i no només a l'entrar-hi. Això permet...
+-El gen de salut ja funciona (ja era hora, eh??). Afecta a la distància a què s'ha d'acostar un animal a un altre per infectar-se de forma linear.
+-Els animals ja no apareixen a la sorra a l'inici de la simulacio. Encara he de descobrir per què tots apareixen al mateix punt, probablement tingui a veure amb la seed.
+-Notoris canvis al model de la guineu. Ara fa un 5% menys de por.
+-Les guineus ara tenen diferents colors.
+-Els conills ara també tenen diferents colors.
+-El text de salut en la secció d'individu seleccionat ara s'actualitza correctament.
+-Arreglat un error que feia que el gràfic de gens no s'actualitzés correctament, ja que sempre agafava dades de les gallines i no de l'espècie corresponent. Sempre és culpa de les gallines!
+
+11/9/22
+-Sortir de la simulació ara et porta al menú principal nou i no a l'antic.
+-Canvi al nom de versió del menú principal.
+
+12/9/22
+-Ara les gallines, guineus i conills tenen LODs (Level of detail). Això vol dir que quan la càmera s'allunya dels individus, aquests es veuen pitjor per facilitar el renderitzat. La gràcia és que no es noti la diferència de qualitat gràcies a la distància.
+-També s'ha afegit culling, que fa que tot el que no es mostri a la càmera directament no es renderitzi.
+-Arreglat un error que feia que els gràfics no mostressin correctament nombres de tres o més xifres en l'eix vertical.
+-Lleus canvis al color de l'aigua
+-Canvis al color i il·luminació dels arbres.
+-Les ombres ara són menys fosques.
+-Gràcies a tots aquests canvis hi ha una millora SUBSTANCIAL al rendiment. (Sí, ho he posat en majúscula per remarcar que ara és molt millor.)
+-Millores a les partícules del virus.
+
+14/9/22
+-Arreglats uns problemes amb les animacions dels conills.
+-Afegit un "truqui-truqui". Si prems [I], l'individu seleccionat, si n'hi ha, s'infecta automàticament. Això probablement serà eliminat, ja que estic considerant noves maneres d'infectar el primer individu.
+-S'ha creat una nova secció a la interfície: els esdeveniments importants. Aquesta mostra una llista amb events notoris que poden passar a la simulació: Inici simulació, Extinció d'una espècie, Primer infectat d'una espècie, Fi simulació.
+-També s'ha creat el nou sistema de notificacions, evidentment.
+-Per fi, si surts de la simulacio (i deses), es crea un arxiu amb la informacio necessaria per re-reproduir la simulacio.
+-Quan prepares una nova simulació, és més senzill veure on acabarà el nou arxiu. A més, la ubicació de l'arxiu sempre serà la última carpeta visitada en l'exporador.
+-El programa ara no et deixa crear simulacions amb ubicacions repetides.
+-Preparacions de l'aztar per re-reproduir la simulacio.
+
+18/9/22
+-En l'arxiu que es guarda a l'acabar una simulació ara també es guarden les dades dels gràfics, el temps que ha durat la simulació i la data i hora en què s'ha creat.
+-El temps en què es refresquen els gràfics ara comença just quan comença la simulació.
+-S'ha afegit un límit de 30 espècies personalitzades.
+-S'ha afegit una nova secció al menú principal: Simulacions anteriors. Permet veure i seleccionar els arxius que es generen al finalitzar simulacions.
+-Si es selecciona una simulació anterior, es podrà veure informació com: data creació, temps que ha durat, temps màxim, variabilitat, esdeveniments importants i els gràfics. El menú encara no està acabat.
+
+9/10/22
+-Ara es poden veure els esdeveniments importants en el menú de simulacions anteriors.
+-També es pot entrar al gràfic de cada espècie predeterminada. Què dius? I les personalitzades? No, les personalitzades no.
+
+18/10/22
+-El primer individu de cada simulació s'infecta automàticament al cap de 30 segons d'iniciar.
+-El punt d'infecció del virus s'activa al cap de 30 segons d'iniciar.
+-Arreglat un error que feia que els individus puguessin apareixer a l'inici de la simulacio a un punt sota el mar, de manera que no podien moure's d'allí, inutilitzant la simulació.
+-El radi d'infecció ara és el doble.
+-El temps d'infecció ara és el doble... També. A no ser que l'individu tingui salut màxima, que llavors no pot morir pel virus.
+-Morir pel virus ja no interromp altres accions com copular. Tenen les seves prioritats molt clares, els animals.
+-Els animals ara apareixen a diferents punts a l'iniciar la simulació.
+
+23/10/22
+-Quan s'arriba al temps màxim, la simulació s'atura i els animals també.
+-Les plantes comencen el seu comportament quan inicia la simulació. Si s'arriba al temps màxim deixen de reproduir-se.
+-La simulació deixa de recopilar dades quan s'arriba al temps màxim.
+-Els individus no es poden infectar quan s'arriba al temps màxim.
+-El sol deixa de girar quan s'arriba al temps màxim.
+-S'ha creat el .json dels humans i canviat l'ID dels altres, ja que l'humà tindrà ID 0.
+-Cada 15 segons, hi ha un intent de fer aparèxier una planta. Com més plantes hi ha, més improvable és que n'aparegui una.
+-Ja es poden veure repeticions... Però no sé si funcionen, en teoria sí.
+-Les opcions del menú de pausa canvien si s'està repetint una simulació o és una nova.
+-S'han afegit dues opcions al MODO DESARROLLADOR: Fer una rèplica d'una simulació (una altra amb els mateixos paràmetres) i exportar les dades d'una simulació a un arxiu .csv
+-El gràfic de salut ara es pot veure en les dades de simulacions anteriors.
+-A més, en el mateix menú, es poden activar i desactivar els gràfics de població, infectats i salut.
+
+4/11/22
+-S'ha afegit GPU instancing (En realitat no funciona).
+-Labors d'optimització: "distribució de càrregues". Cada individu triga un temps a l'atzar entre 0 i 0,5 segons abans de començar a actuar per tal de distribuir el rendiment, tot optimitzant el programa.
+
+8/11/22
+-El percentatge d'infectats de cada espècie es calcula i es mostra en la interfície, al costat del text que mostra el nombre d'infectats.
+-El percentatge d'infectats respecte el temps ara es guarda en l'arxiu de cada simulació.
+-Ara es pot moure la càmera amb [WASD], i a més, mantenir premut [Shift] fa que vagi el doble de ràpid.
+-S'ha fet el model masculí dels humans, i s'han fet preparacions per la seva funcionalitat.
+
+9/11/22
+-S'ha continuat la funcionalitat dels humans.
+-S'ha eliminat el paràmetre d'espècie "Detecció", tot substituint-lo per un nou, la probabilitat d'infecció. S'ha canviat l'intefície de l'editor d'espècies per reflectir aquest canvi.
+-Totes les espècies tenen un 100% de probabilitat d'infecció, excepte els humans.
+-S'ha creat un nou gràfic on es recull el percentatge d'infectats de cada espècie.
+
+13/11/22
+-Labors d'optimització.
+-S'ha continuat treballant en el comportament dels humans. Els humans es poden infectar els uns als altres fàcilment.
+-Els humans ara estan animats.
+-Els animals ara apareixen amb el tamany correcte al néixer.
+-S'ha arreglat un error amb el moviment de la càmera, Time.deltaTime, saps??
+-Ara es pot prémer F11 per canviar la pantalla completa.
+-L'oceà ara es veu correctament desde qualsevol distància.
+-El MODO DESARROLLADOR ara es manté correctament al llarg d'una sessió. Ja no cal reactivar-lo cada cop que s'entra al menú principal.
+-En el MODO DESARROLLADOR ara es pot repetir una simulació si no és adequada per un experiment. (guiño guiño). Aleshores les pestanyes de l'interfície obertes romanen obertes.
+-Ara es pot activar el MODO DESARROLLADOR desde la simulació, i això queda indicat amb l'icono molón.
+-Infectar un individu amb el botó [I] només funciona si està activat el MODO DESARROLLADOR. El mateix amb la optimització desesperada si es prem [O].
+-S'ha començat L'EXPERIMENT.
+
+14/11/22
+-Ara es pot veure el gràfic de percentatges en la secció d'anàlisi de resultats.
+-Una nova funció pel MODO DESARROLLADOR. Ara es pot fer una ronda de captures molt èpica on es guarden els gràfics de cada simulació com a pngs.
+-Si s'apreta [C] en el menú principal en el MODO DESARROLLADOR, el menú deixa de moure's, això va molt bé per fer captures.

@@ -1,0 +1,17 @@
+{
+    "id": 3,
+    "nomSingular": "Conill",
+    "nomPlural": "Conills",
+    "articleGenere": 0,
+    "dietaNormal": [],
+    "dietaPersonalitzada": [],
+    "velocitat": 10.101733207702637,
+    "tempsAfamacio": 0.4991864860057831,
+    "tempsAssedegament": 0.0,
+    "tempsGanesReproduccio": 0.20000000298023225,
+    "tempsGestacio": 60.0,
+    "fillsMinims": 2,
+    "fillsMaxims": 4,
+    "probabilitatInfeccio": 1.0,
+    "tempsDesenvolupamentCries": 0.05000000074505806
+}

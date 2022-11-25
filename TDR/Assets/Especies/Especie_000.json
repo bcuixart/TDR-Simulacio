@@ -1,0 +1,20 @@
+{
+    "id": 0,
+    "nomSingular": "Humà",
+    "nomPlural": "Humans",
+    "articleGenere": 0,
+    "dietaNormal": [
+        1,
+        3
+    ],
+    "dietaPersonalitzada": [],
+    "velocitat": 4.812700271606445,
+    "tempsAfamacio": 0.10056132972240449,
+    "tempsAssedegament": 0.20000000298023225,
+    "tempsGanesReproduccio": 0.0497785434,
+    "tempsGestacio": 90.5088882446289,
+    "fillsMinims": 1,
+    "fillsMaxims": 1,
+    "probabilitatInfeccio": 0.01,
+    "tempsDesenvolupamentCries": 0.05000000074505806
+}

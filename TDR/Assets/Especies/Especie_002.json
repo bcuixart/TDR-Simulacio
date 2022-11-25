@@ -1,0 +1,20 @@
+{
+    "id": 2,
+    "nomSingular": "Guineu",
+    "nomPlural": "Guineus",
+    "articleGenere": 1,
+    "dietaNormal": [
+        0,
+        2
+    ],
+    "dietaPersonalitzada": [],
+    "velocitat": 5.0,
+    "tempsAfamacio": 0.20000000298023225,
+    "tempsAssedegament": 0.20000000298023225,
+    "tempsGanesReproduccio": 0.125,
+    "tempsGestacio": 30.0,
+    "fillsMinims": 1,
+    "fillsMaxims": 5,
+    "probabilitatInfeccio": 1.0,
+    "tempsDesenvolupamentCries": 0.05000000074505806
+}

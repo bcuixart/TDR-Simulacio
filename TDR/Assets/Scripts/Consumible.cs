@@ -23,6 +23,11 @@ public class Consumible : MonoBehaviour
 
     public float SerMenjat(float velocitatMenjacio)
     {
+        if (!planta)
+        {
+            individu.estat = EstatIndividu.SentMenjat;
+        }
+
         copsConsumible -= velocitatMenjacio;
         if(copsConsumible <= 0)
         {

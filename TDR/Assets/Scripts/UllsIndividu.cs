@@ -8,7 +8,6 @@ public class UllsIndividu : MonoBehaviour
     [SerializeField] Individu individu;
     //public Transform cap;
 
-    public float distanciaDeVista;
     public float angleDeVista;
 
     [SerializeField] LayerMask menjarMask;
@@ -23,15 +22,13 @@ public class UllsIndividu : MonoBehaviour
     void Start()
     {
         gameMana = GameManager.instance;
-
-        distanciaDeVista = individu.especie.deteccioBase + individu.especie.deteccioVariacio * individu.genoma.gens[1].gen;
     }
 
     public void VeureMenjar()
     {
         menjarVist.Clear();
 
-        Collider[] menjarEnElRadiDeVista = Physics.OverlapSphere(transform.position, distanciaDeVista, menjarMask);
+        Collider[] menjarEnElRadiDeVista = Physics.OverlapSphere(transform.position, 150, menjarMask);
         for (int i = 0; i < menjarEnElRadiDeVista.Length; i++)
         {
             Transform menjar = menjarEnElRadiDeVista[i].transform;
@@ -43,27 +40,14 @@ public class UllsIndividu : MonoBehaviour
                 nomMenjar = nomMenjar.Replace("EspeciePersonalitzada_", "");
                 int menjarID = int.Parse(nomMenjar);
 
-                if (menjar == transform || !individu.especie.dietaPrimaria.Contains(menjarID))
+                if (menjar == transform || !individu.especie.dietaNormal.Contains(menjarID))
                 {
                     continue; //Si es determina que aquest animal no forma part de la dieta, no s'afegeix.
                 }
             }
 
             //Si es segueix (plantes automàticament en herbívors o animals vàlids en carnívors)
-            Vector3 posicioMenjar = new Vector3(menjar.position.x, transform.position.y, menjar.position.z);
-
-            Vector3 direccioAlMenjar = (posicioMenjar - transform.position).normalized;
-
-            if (Vector3.Angle(transform.forward, direccioAlMenjar) < angleDeVista / 2)
-            {
-                float dst = Vector3.Distance(transform.position, posicioMenjar);
-
-                if (!Physics.Raycast(transform.position, direccioAlMenjar, dst, obstacleMask))
-                {
-                    //Donat que s'estigui mirant el menjar, s'afegeix a la llista de menjars vistos.
-                    menjarVist.Add(menjar);
-                }
-            }
+            menjarVist.Add(menjar);
         }
     }
 
@@ -71,7 +55,7 @@ public class UllsIndividu : MonoBehaviour
     {
         individusPerReproduirseVistos.Clear();
 
-        Collider[] individusEnElRadiDeVista = Physics.OverlapSphere(transform.position, distanciaDeVista, individusPerReproduirseMask);
+        Collider[] individusEnElRadiDeVista = Physics.OverlapSphere(transform.position, 150, individusPerReproduirseMask);
         for (int i = 0; i < individusEnElRadiDeVista.Length; i++)
         {
             Transform _individu = individusEnElRadiDeVista[i].transform;
@@ -83,19 +67,7 @@ public class UllsIndividu : MonoBehaviour
                 continue;
             }
 
-            Vector3 posicioIndividu = new Vector3(_individu.position.x, transform.position.y, _individu.position.z);
-
-            Vector3 direccioAlIndividu = (posicioIndividu - transform.position).normalized;
-
-            if (Vector3.Angle(transform.forward, direccioAlIndividu) < angleDeVista / 2)
-            {
-                float dst = Vector3.Distance(transform.position, posicioIndividu);
-
-                if (!Physics.Raycast(transform.position, direccioAlIndividu, dst, obstacleMask))
-                {
-                    individusPerReproduirseVistos.Add(_individu);
-                }
-            }
+            individusPerReproduirseVistos.Add(_individu);
         }
     }
 

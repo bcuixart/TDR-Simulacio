@@ -24,6 +24,8 @@ public class JSONEspecie : MonoBehaviour
     [Space]
     [SerializeField] GameObject llistaArxiusNormal;
     [SerializeField] GameObject llistaArxiusPersonalitzats;
+    [Space]
+    [SerializeField] Text probabilitatMutacioText;
 
     #region OH_DIOS
     [Header("JSONObert")]
@@ -38,40 +40,26 @@ public class JSONEspecie : MonoBehaviour
 
     //AIXO ES HORROROS AAAH
 
-    [SerializeField] Slider velocitatCaminacioBaseSlider;
-    [SerializeField] Slider velocitatCaminacioVariacioSlider;    
-    [SerializeField] Text velocitatCaminacioBaseText;
-    [SerializeField] Text velocitatCaminacioVariacioText;
+    [SerializeField] Slider velocitatCaminacioSlider;
+    [SerializeField] Text velocitatCaminacioText;
 
-    [SerializeField] Slider velocitatCorrerBaseSlider;
-    [SerializeField] Slider velocitatCorrerVariacioSlider;
-    [SerializeField] Text velocitatCorrerBaseText;
-    [SerializeField] Text velocitatCorrerVariacioText;
+    [SerializeField] Slider velocitatCorrerSlider;
+    [SerializeField] Text velocitatCorrerText;
 
-    [SerializeField] Slider tempsAfamacioBaseSlider;
-    [SerializeField] Slider tempsAfamacioVariacioSlider;
-    [SerializeField] Text tempsAfamacioBaseText;
-    [SerializeField] Text tempsAfamacioVariacioText;
+    [SerializeField] Slider tempsAfamacioSlider;
+    [SerializeField] Text tempsAfamacioText;
 
-    [SerializeField] Slider tempsAssedecacioBaseSlider;
-    [SerializeField] Slider tempsAssedecacioVariacioSlider;
-    [SerializeField] Text tempsAssedecacioBaseText;
-    [SerializeField] Text tempsAssedecacioVariacioText;
+    [SerializeField] Slider tempsAssedecacioSlider;
+    [SerializeField] Text tempsAssedecacioText;
 
-    [SerializeField] Slider tempsGanesReproduccioBaseSlider;
-    [SerializeField] Slider tempsGanesReproduccioVariacioSlider;
-    [SerializeField] Text tempsGanesReproduccioBaseText;
-    [SerializeField] Text tempsGanesReproduccioVariacioText;
+    [SerializeField] Slider tempsGanesReproduccioSlider;
+    [SerializeField] Text tempsGanesReproduccioText;
 
-    [SerializeField] Slider tempsGestacioBaseSlider;
-    [SerializeField] Slider tempsGestacioVariacioSlider;
-    [SerializeField] Text tempsGestacioBaseText;
-    [SerializeField] Text tempsGestacioVariacioText;
+    [SerializeField] Slider tempsGestacioSlider;
+    [SerializeField] Text tempsGestacioText;
 
-    [SerializeField] Slider detecioBaseSlider;
-    [SerializeField] Slider detecioVariacioSlider;
-    [SerializeField] Text detecioBaseText;
-    [SerializeField] Text detecioVariacioText;
+    [SerializeField] Slider detecioSlider;
+    [SerializeField] Text detecioText;
 
     [SerializeField] Slider fillsBaseSlider;
     [SerializeField] Slider fillsVariacioSlider;
@@ -88,7 +76,7 @@ public class JSONEspecie : MonoBehaviour
 
     void Start()
     {
-        InformacioSimulacio.instance = new InformacioSimulacio(100);
+        //InformacioSimulacio.instance = new InformacioSimulacio(10f ,100);
         CarregarArxius();
     }
 
@@ -285,26 +273,16 @@ public class JSONEspecie : MonoBehaviour
         articleMasculi.isOn = (especieSeleccionada.articleGenere == ArticleGenere.Masculí) ? true : false;
         articleFemeni.isOn = (especieSeleccionada.articleGenere == ArticleGenere.Femení) ? true : false;
 
-        velocitatCaminacioBaseSlider.value = especieSeleccionada.velocitatCaminarBase;
-        velocitatCaminacioVariacioSlider.value = especieSeleccionada.velocitatCaminarVariacio;
+        velocitatCaminacioSlider.value = especieSeleccionada.velocitat;
+        velocitatCorrerSlider.value = especieSeleccionada.velocitat;
 
-        velocitatCorrerBaseSlider.value = especieSeleccionada.velocitatCorrerBase;
-        velocitatCorrerVariacioSlider.value = especieSeleccionada.velocitatCorrerVariacio;
+        tempsAfamacioSlider.value = especieSeleccionada.tempsAfamacio;
+        tempsAssedecacioSlider.value = especieSeleccionada.tempsAssedegament;
+        tempsGanesReproduccioSlider.value = especieSeleccionada.tempsGanesReproduccio;
 
-        tempsAfamacioBaseSlider.value = especieSeleccionada.tempsAfamacioBase;
-        tempsAfamacioVariacioSlider.value = especieSeleccionada.tempsAfamacioVariacio;
+        tempsGestacioSlider.value = especieSeleccionada.tempsGestacio;
 
-        tempsAssedecacioBaseSlider.value = especieSeleccionada.tempsAssedegamentBase;
-        tempsAssedecacioVariacioSlider.value = especieSeleccionada.tempsAssedegamentVariacio;
-
-        tempsGanesReproduccioBaseSlider.value = especieSeleccionada.tempsGanesReproduccioBase;
-        tempsGanesReproduccioVariacioSlider.value = especieSeleccionada.tempsGanesReproduccioVariacio;
-
-        tempsGestacioBaseSlider.value = especieSeleccionada.tempsGestacioBase;
-        tempsGestacioVariacioSlider.value = especieSeleccionada.tempsGestacioVariacio;
-
-        detecioBaseSlider.value = especieSeleccionada.deteccioBase;
-        detecioVariacioSlider.value = especieSeleccionada.deteccioVariacio;
+        //detecioSlider.value = especieSeleccionada.deteccio;
 
         fillsBaseSlider.value = especieSeleccionada.fillsMinims;
         fillsVariacioSlider.value = especieSeleccionada.fillsMaxims;
@@ -338,88 +316,46 @@ public class JSONEspecie : MonoBehaviour
         }
     }
 
-    public void VelocitatCaminacioBase(float valor)
+    public void VelocitatCaminacio(float valor)
     {
-        velocitatCaminacioBaseText.text = "Base (" + valor.ToString() + ")";
-        especieSeleccionada.velocitatCaminarBase = valor;
+        velocitatCaminacioText.text = valor.ToString();
+        especieSeleccionada.velocitat = valor;
     }
 
-    public void VelocitatCaminacioVariacio(float valor)
+    public void VelocitatCorrecio(float valor)
     {
-        velocitatCaminacioVariacioText.text = "Variació (" + valor.ToString() + ")";
-        especieSeleccionada.velocitatCaminarVariacio = valor;
+        velocitatCorrerText.text = valor.ToString();
+        especieSeleccionada.velocitat = valor;
     }
 
-    public void VelocitatCorrecioBase(float valor)
+    public void TempsAfamacio(float valor)
     {
-        velocitatCorrerBaseText.text = "Base (" + valor.ToString() + ")";
-        especieSeleccionada.velocitatCorrerBase = valor;
+        tempsAfamacioText.text = valor.ToString();
+        especieSeleccionada.tempsAfamacio = valor;
     }
 
-    public void VelocitatCorrecioVariacio(float valor)
+    public void TempsAssedegacio(float valor)
     {
-        velocitatCorrerVariacioText.text = "Variació (" + valor.ToString() + ")";
-        especieSeleccionada.velocitatCorrerVariacio = valor;
+        tempsAssedecacioText.text = valor.ToString();
+        especieSeleccionada.tempsAssedegament = valor;
     }
 
-    public void TempsAfamacioBase(float valor)
+    public void TempsGanesDeReproduccio(float valor)
     {
-        tempsAfamacioBaseText.text = "Base (" + valor.ToString() + ")";
-        especieSeleccionada.tempsAfamacioBase = valor;
+        tempsGanesReproduccioText.text = valor.ToString();
+        especieSeleccionada.tempsGanesReproduccio = valor;
     }
 
-    public void TempsAfamacioVariacio(float valor)
+    public void TempsGestacio(float valor)
     {
-        tempsAfamacioVariacioText.text = "Variació (" + valor.ToString() + ")";
-        especieSeleccionada.tempsAfamacioVariacio = valor;
+        tempsGestacioText.text = valor.ToString();
+        especieSeleccionada.tempsGestacio = valor;
     }
 
-    public void TempsAssedegacioBase(float valor)
+    public void Deteccio(float valor)
     {
-        tempsAssedecacioBaseText.text = "Base (" + valor.ToString() + ")";
-        especieSeleccionada.tempsAssedegamentBase = valor;
-    }
-
-    public void TempsAssedegacioVariacio(float valor)
-    {
-        tempsAssedecacioVariacioText.text = "Variació (" + valor.ToString() + ")";
-        especieSeleccionada.tempsAssedegamentVariacio = valor;
-    }
-
-    public void TempsGanesDeReproduccioBase(float valor)
-    {
-        tempsGanesReproduccioBaseText.text = "Base (" + valor.ToString() + ")";
-        especieSeleccionada.tempsGanesReproduccioBase = valor;
-    }
-
-    public void TempsGanesDeReproduccioVariacio(float valor)
-    {
-        tempsGanesReproduccioVariacioText.text = "Variació (" + valor.ToString() + ")";
-        especieSeleccionada.tempsGanesReproduccioVariacio = valor;
-    }
-
-    public void TempsGestacioBase(float valor)
-    {
-        tempsGestacioBaseText.text = "Base (" + valor.ToString() + ")";
-        especieSeleccionada.tempsGestacioBase = valor;
-    }
-
-    public void TempsGestacioVariacio(float valor)
-    {
-        tempsGestacioVariacioText.text = "Variació (" + valor.ToString() + ")";
-        especieSeleccionada.tempsGestacioVariacio = valor;
-    }
-
-    public void DeteccioBase(float valor)
-    {
-        detecioBaseText.text = "Base (" + valor.ToString() + ")";
-        especieSeleccionada.deteccioBase = valor;
-    }
-
-    public void DeteccioVariacio(float valor)
-    {
-        detecioVariacioText.text = "Variació (" + valor.ToString() + ")";
-        especieSeleccionada.deteccioVariacio = valor;
+        detecioText.text = valor.ToString();
+        //especieSeleccionada.deteccio = valor;
     }
 
     public void FillsMaxims(float valor)
@@ -449,6 +385,13 @@ public class JSONEspecie : MonoBehaviour
         InformacioSimulacio.instance.individusPerFerApareixerPersonalitzat[id] += quatitat * multiplicadorAfegirEspecies;
         InformacioSimulacio.instance.individusPerFerApareixerPersonalitzat[id] = Mathf.Clamp(InformacioSimulacio.instance.individusPerFerApareixerPersonalitzat[id], 0, 100);
         text.text = InformacioSimulacio.instance.individusPerFerApareixerPersonalitzat[id].ToString();
+    }
+
+    public void CanviarProbabilitatMutacio(float prob)
+    {
+        InformacioSimulacio.instance.probabilitatMutacio = prob;
+
+        probabilitatMutacioText.text = "Probabilitat mutació (" + prob.ToString() + "%)";
     }
 
     public void LlistaArxius()

@@ -1,0 +1,17 @@
+{
+    "id": 1,
+    "nomSingular": "Gallina",
+    "nomPlural": "Gallines",
+    "articleGenere": 1,
+    "dietaNormal": [],
+    "dietaPersonalitzada": [],
+    "velocitat": 2.0578646659851076,
+    "tempsAfamacio": 0.41115981340408327,
+    "tempsAssedegament": 0.20000000298023225,
+    "tempsGanesReproduccio": 0.4588121473789215,
+    "tempsGestacio": 30.0,
+    "fillsMinims": 1,
+    "fillsMaxims": 1,
+    "probabilitatInfeccio": 1.0,
+    "tempsDesenvolupamentCries": 0.05000000074505806
+}

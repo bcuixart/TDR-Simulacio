@@ -10,6 +10,7 @@ public class Canvas : MonoBehaviour
 
     [Header("Seleccionar individus")]
     [SerializeField] GameObject seleccionarIndividuFons;
+    [SerializeField] GameObject seleccionarIndividuObrir;
     [SerializeField] GameObject seleccionarIndividuSeleccionat;
     [SerializeField] GameObject seleccionarIndividuNoSeleccionat;
 
@@ -18,7 +19,9 @@ public class Canvas : MonoBehaviour
 
     [SerializeField] Text ganaText;
     [SerializeField] Text setText;
-    [SerializeField] Text ganesReproduccioText;    
+    [SerializeField] Text ganesReproduccioText;
+
+    [SerializeField] Text infectatText;
     
     [SerializeField] Slider ganaSlider;
     [SerializeField] Slider setSlider;
@@ -26,31 +29,29 @@ public class Canvas : MonoBehaviour
 
     [SerializeField] Text genereText;
 
-    [SerializeField] Slider velocitatSlider;
-    [SerializeField] Slider deteccioSlider;
-    [SerializeField] Slider ansiaReproductivaSlider;
-    [SerializeField] Slider colorSlider;
-    [SerializeField] Slider atractiuSlider;
-    [SerializeField] Slider gestacioSlider;
+    [SerializeField] Slider salutSlider;
+    [SerializeField] Text salutText;
 
     [Header("Pausa")]
     public GameObject pausaFons;
+    [SerializeField] GameObject pausaNova;
+    [SerializeField] GameObject pausaRepeticio;
+    public GameObject botoDevModeRepeticio;
+    public GameObject devModeIndicador;
 
     [Header("Temps")]
     [SerializeField] GameObject tempsFons;
+    [SerializeField] GameObject tempsObrir;
 
     [SerializeField] Text tempsText;
 
-    [SerializeField] List<Image> velocitatImages;
-    [SerializeField] List<Sprite> velocitatSpritesSeleccionat;
-    [SerializeField] List<Sprite> velocitatSpritesNoSeleccionat;
+    [SerializeField] List<Text> velocitatImages;
+    [SerializeField] Text pausaImage;
 
-    [SerializeField] Image pausaImage;
-    [SerializeField] Sprite pausaSpritePausat;
-    [SerializeField] Sprite pausaSpriteNoPausat;
 
     [Header("Dades")]
     [SerializeField] GameObject dadesFons;
+    [SerializeField] GameObject dadesObrir;
 
     public Transform dadesLlistaEspeciesNormalBase;
     public Transform dadesLlistaEspeciesPersonalitzadesBase;
@@ -62,19 +63,30 @@ public class Canvas : MonoBehaviour
 
     [SerializeField] Text especieNomText;
     [SerializeField] Text especieNombreText;
+    [SerializeField] Text especieNombreInfectatsText;
     [SerializeField] GameObject dadesLlista;
     [SerializeField] GameObject dadesEspecie;
 
     [SerializeField] Grafic poblacioGrafic;
-    [SerializeField] Grafic velocitatGrafic;
-    [SerializeField] Grafic deteccioGrafic;
-    [SerializeField] Grafic ansiaReproductivaGrafic;
-    [SerializeField] Grafic colorGrafic;
-    [SerializeField] Grafic atractiuGrafic;
-    [SerializeField] Grafic gestacioGrafic;
+    [SerializeField] Grafic infectatsGrafic;
+    [SerializeField] Grafic percentatgeGrafic;
+    [SerializeField] Grafic salutGrafic;
+
+    [Header("Notificacions")]
+    [SerializeField] GameObject notificacionsFons;
+    [SerializeField] GameObject notificacionsBase;
+    [SerializeField] GameObject notificacionsObrir;
+    [SerializeField] GameObject notificacionsBasePrefab;
+    [SerializeField] GameObject notificacionsTransform;
+    [SerializeField] GameObject notificacionsPrefab;
 
     int dadesEspecieSeleccionadaID;
     bool dadesEspecieSeleccionadaPersonalitzada;
+
+    public static bool obertIndividuSeleccionat;
+    public static bool obertTemps;
+    public static bool obertDades;
+    public static bool obertNotificacions;
 
     void Awake()
     {
@@ -83,7 +95,39 @@ public class Canvas : MonoBehaviour
 
     void Start()
     {
+        if (GameManager.instance.info.finalitzada)
+        {
+            pausaNova.SetActive(false);
+            pausaRepeticio.SetActive(true);
+        }
+
         InvokeRepeating("FormatejarTextTemps", 0, 1);
+
+        if (Menu.devMode)
+        {
+            botoDevModeRepeticio.SetActive(true);
+            devModeIndicador.SetActive(true);
+        }
+
+        if (obertNotificacions)
+        {
+            ObrirNotificacions();
+        }
+
+        if (obertIndividuSeleccionat)
+        {
+            ObrirIndividuSeleccionar();
+        }
+
+        if (obertDades)
+        {
+            ObrirDades();
+        }
+
+        if (obertTemps)
+        {
+            ObrirTemps();
+        }
     }
 
     void Update()
@@ -109,6 +153,7 @@ public class Canvas : MonoBehaviour
             seleccionarIndividuNoSeleccionat.SetActive(true);
             seleccionarIndividuSeleccionat.SetActive(false);
             seleccionarIndividuFons.SetActive(true);
+            seleccionarIndividuObrir.SetActive(false);
 
             return;
         }
@@ -116,25 +161,24 @@ public class Canvas : MonoBehaviour
         seleccionarIndividuNoSeleccionat.SetActive(false);
         seleccionarIndividuSeleccionat.SetActive(true);
         seleccionarIndividuFons.SetActive(true);
+        seleccionarIndividuObrir.SetActive(false);
 
         nomEspecie.text = individu.especie.nomSingular;
 
-        ganaText.text = "Gana (" + individu.gana.ToString() + "%)";
-        setText.text = "Set (" + individu.set.ToString() + "%)";
-        ganesReproduccioText.text = "Ganes de reproduir-se (" + individu.ganesDeReproduirse.ToString() + "%)";
+        ganaText.text = individu.gana.ToString() + "%";
+        setText.text = individu.set.ToString() + "%";
+        ganesReproduccioText.text = individu.ganesDeReproduirse.ToString() + "%";
 
         ganaSlider.value = individu.gana;
         setSlider.value = individu.set;
         ganesReproduccioSlider.value = individu.ganesDeReproduirse;
 
-        genereText.text = (individu.genoma.genere == Genere.Masculí) ? "Génere: MACHO IBÉRICO" : "Génere: MACHA IBÉRICA";
+        infectatText.text = individu.infectat ? "Sí" : "No";
 
-        velocitatSlider.value = individu.genoma.gens[0].gen;
-        deteccioSlider.value = individu.genoma.gens[1].gen;
-        ansiaReproductivaSlider.value = individu.genoma.gens[2].gen;
-        colorSlider.value = individu.genoma.gens[3].gen;
-        atractiuSlider.value = individu.genoma.gens[4].gen;
-        gestacioSlider.value = individu.genoma.gens[5].gen;
+        genereText.text = (individu.genoma.genere == Genere.Masculí) ? "MACHO IBÉRICO" : "MACHA IBÉRICA";
+
+        salutSlider.value = individu.genoma.gens[0].gen;
+        salutText.text = individu.genoma.gens[0].gen.ToString();
 
         switch (individu.estat)
         {
@@ -171,6 +215,9 @@ public class Canvas : MonoBehaviour
             case EstatIndividu.Mort:
                 estatText.text = "Morit :)";
                 break;
+            case EstatIndividu.SentMenjat:
+                estatText.text = "Sent brutalment devorat";
+                break;
             default:
                 break;
         }
@@ -183,32 +230,79 @@ public class Canvas : MonoBehaviour
 
     public void ObrirIndividuSeleccionar()
     {
+        obertIndividuSeleccionat = true;
+
         seleccionarIndividuFons.SetActive(true);
+        seleccionarIndividuObrir.SetActive(false);
     }
 
     public void TancarIndividuSeleccionat()
     {
+        obertIndividuSeleccionat = false;
+
         seleccionarIndividuFons.SetActive(false);
+        seleccionarIndividuObrir.SetActive(true);
     }
 
     public void ObrirTemps()
     {
+        obertTemps = true;
+
         tempsFons.SetActive(true);
+        tempsObrir.SetActive(false);
     }
 
     public void TancarTemps()
     {
+        obertTemps = false;
+
         tempsFons.SetActive(false);
+        tempsObrir.SetActive(true);
     }
 
     public void ObrirDades()
     {
+        obertDades = true;
+
         dadesFons.SetActive(true);
+        dadesObrir.SetActive(false);
     }
 
     public void TancarDades()
     {
+        obertDades = false;
+
         dadesFons.SetActive(false);
+        dadesObrir.SetActive(true);
+    }
+
+    public void ObrirNotificacions()
+    {
+        obertNotificacions = true;
+
+        notificacionsFons.SetActive(true);
+        notificacionsObrir.SetActive(false);
+        notificacionsBase.SetActive(false);
+    }
+
+    public void TancarNotificacions()
+    {
+        obertNotificacions = false;
+
+        notificacionsFons.SetActive(false);
+        notificacionsObrir.SetActive(true);
+        notificacionsBase.SetActive(true);
+    }
+
+    public void NovaNotificacio(Notificacio not)
+    {
+        GameObject notificacioBase = Instantiate(notificacionsBasePrefab, notificacionsBase.transform);
+        Destroy(notificacioBase, 6);
+
+        notificacioBase.GetComponent<Text>().text = not.text.Split('-')[1];
+
+        GameObject notificacioLlista = Instantiate(notificacionsPrefab, notificacionsTransform.transform);
+        notificacioLlista.GetComponent<Text>().text = not.text;
     }
 
     public void TriarLlistaDades(int llista)
@@ -237,48 +331,54 @@ public class Canvas : MonoBehaviour
         if (personalitzat)
         {
             especieNombreText.text = "Poblacio actual: " + DadesManager.instance.nombreIndividusPersonalitzats[id];
+            float percentatge = 100f * ((float)DadesManager.instance.nombreIndividusPersonalitzatsInfectats[id] / (float)DadesManager.instance.nombreIndividusPersonalitzats[id]);
+            especieNombreInfectatsText.text = "Nombre actual infectats: " + DadesManager.instance.nombreIndividusPersonalitzatsInfectats[id] + " (" + percentatge + "%)";
 
             especieNomText.text = GameManager.instance.especiesPersonalitzades[id].nomPlural;
-            List<float> punts=new List<float>();
-            foreach (int item in DadesManager.instance.dades.especiesPersonalitzades[id].nombreIndividus)
-            {
-                punts.Add(item);
-            }
-            poblacioGrafic.punts = punts;
 
-            velocitatGrafic.punts = DadesManager.instance.dades.especiesPersonalitzades[id].velocitatMitjana;
-            deteccioGrafic.punts = DadesManager.instance.dades.especiesPersonalitzades[id].deteccioMitjana;
-            ansiaReproductivaGrafic.punts = DadesManager.instance.dades.especiesPersonalitzades[id].ansiaReproductivaMitjana;
-            colorGrafic.punts = DadesManager.instance.dades.especiesPersonalitzades[id].colorMitjana;
-            gestacioGrafic.punts = DadesManager.instance.dades.especiesPersonalitzades[id].gestacioMitjana;
-            atractiuGrafic.punts = DadesManager.instance.dades.especiesPersonalitzades[id].atractiuMitjana;
+            List<float> punts=new List<float>();
+            List<float> puntsInf=new List<float>();
+
+            for (int i = 0; i < DadesManager.instance.dades.especiesPersonalitzades[id].nombreIndividus.Count; i++)
+            {
+                punts.Add(DadesManager.instance.dades.especiesPersonalitzades[id].nombreIndividus[i]);
+                puntsInf.Add(DadesManager.instance.dades.especiesPersonalitzades[id].nombreIndividusInfectats[i]);
+            }
+
+            poblacioGrafic.punts = punts;
+            infectatsGrafic.punts = puntsInf;
+
+            percentatgeGrafic.punts = DadesManager.instance.dades.especiesPersonalitzades[id].percentatgeInfectats;
+            salutGrafic.punts = DadesManager.instance.dades.especiesPersonalitzades[id].salutMitjana;
         }
         else
         {
             especieNombreText.text = "Poblacio actual: " + DadesManager.instance.nombreIndividusNormals[id];
+            float percentatge = 100f * ((float)DadesManager.instance.nombreIndividusNormalsInfectats[id] / (float)DadesManager.instance.nombreIndividusNormals[id]);
+            especieNombreInfectatsText.text = "Nombre actual infectats: " + DadesManager.instance.nombreIndividusNormalsInfectats[id] + " (" + percentatge + "%)";
 
             especieNomText.text = GameManager.instance.especiesNormals[id].nomPlural;
+
             List<float> punts = new List<float>();
-            foreach (int item in DadesManager.instance.dades.especiesNormals[id].nombreIndividus)
+            List<float> puntsInf = new List<float>();
+
+            for (int i = 0; i < DadesManager.instance.dades.especiesNormals[id].nombreIndividus.Count; i++)
             {
-                punts.Add(item);
+                punts.Add(DadesManager.instance.dades.especiesNormals[id].nombreIndividus[i]);
+                puntsInf.Add(DadesManager.instance.dades.especiesNormals[id].nombreIndividusInfectats[i]);
             }
+
             poblacioGrafic.punts = punts;
-            velocitatGrafic.punts = DadesManager.instance.dades.especiesNormals[id].velocitatMitjana;
-            deteccioGrafic.punts = DadesManager.instance.dades.especiesNormals[id].deteccioMitjana;
-            ansiaReproductivaGrafic.punts = DadesManager.instance.dades.especiesNormals[id].ansiaReproductivaMitjana;
-            colorGrafic.punts = DadesManager.instance.dades.especiesNormals[id].colorMitjana;
-            gestacioGrafic.punts = DadesManager.instance.dades.especiesNormals[id].gestacioMitjana;
-            atractiuGrafic.punts = DadesManager.instance.dades.especiesNormals[id].atractiuMitjana;
+            infectatsGrafic.punts = puntsInf;
+
+            percentatgeGrafic.punts = DadesManager.instance.dades.especiesNormals[id].percentatgeInfectats;
+            salutGrafic.punts = DadesManager.instance.dades.especiesNormals[id].salutMitjana;
         }
 
         poblacioGrafic.CrearGrafic();
-        velocitatGrafic.CrearGrafic();
-        deteccioGrafic.CrearGrafic();
-        ansiaReproductivaGrafic.CrearGrafic();
-        colorGrafic.CrearGrafic();
-        gestacioGrafic.CrearGrafic();
-        atractiuGrafic.CrearGrafic();
+        infectatsGrafic.CrearGrafic();
+        percentatgeGrafic.CrearGrafic();
+        salutGrafic.CrearGrafic();
     }
 
     public void RefrescarGrafic()
@@ -294,7 +394,11 @@ public class Canvas : MonoBehaviour
 
     public void DeseleccionarIndividu()
     {
-        GameManager.instance.individuSeleccionat._renderer.material.SetFloat("_EmissionAmount", 0);
+        foreach (Renderer _renderer in GameManager.instance.individuSeleccionat._renderers)
+        {
+            _renderer.material.SetFloat("_EmissionAmount", 0);
+        }
+
         GameManager.instance.individuSeleccionat = null;
 
         SeleccionarIndividu(null);
@@ -306,17 +410,18 @@ public class Canvas : MonoBehaviour
         {
             if (i == GameManager.instance.velocitat - 1)
             {
-                velocitatImages[i].sprite = velocitatSpritesSeleccionat[i];
+                velocitatImages[i].color = new Color32(50, 50, 50, 255);
                 continue;
             }
 
-            velocitatImages[i].sprite = velocitatSpritesNoSeleccionat[i];
+            velocitatImages[i].color = new Color32(120, 120, 120, 255);
         }
     }
 
     public void UI_Sortir()
     {
-        SceneManager.LoadScene("MainMenu");
+        GameManager.instance.AfegirNotificacio(new Notificacio(TipusNotificacio.FinalSimulacioArbitrari, GameManager.instance.elapsed, "", 0));
+        StartCoroutine(GameManager.instance.EventMeteorit());
     }
 
     public void UI_Pausar()
@@ -324,9 +429,16 @@ public class Canvas : MonoBehaviour
         GameManager.instance.Pausa(!GameManager.instance.pausat);
     }
 
+    public void UI_Repetir()
+    {
+        Time.timeScale = 1;
+        GameManager.instance.info.notificacions.Clear();
+        SceneManager.LoadScene("Simulacio");
+    }
+
     public void PosarPausa()
     {
-        pausaImage.sprite = (GameManager.instance.pausat) ? pausaSpritePausat : pausaSpriteNoPausat;
+        pausaImage.color = (GameManager.instance.pausat) ? new Color32(50, 50, 50, 255) : new Color32(120, 120, 120, 255);
 
         if (!GameManager.instance.pausat)
         {
@@ -337,7 +449,7 @@ public class Canvas : MonoBehaviour
 
         for (int i = 0; i < velocitatImages.Count; i++)
         {
-            velocitatImages[i].sprite = velocitatSpritesNoSeleccionat[i];
+            velocitatImages[i].color = new Color32(120, 120, 120, 255);
         }
     }
 

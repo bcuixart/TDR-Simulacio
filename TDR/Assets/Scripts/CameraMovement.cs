@@ -23,47 +23,45 @@ public class CameraMovement : MonoBehaviour
 
     GameManager gameMana;
 
+    float holdingShiftSpeedMultiplier;
+    bool holdingMouseWheel;
+
     private void Start()
     {
         // Initialize the correct initial rotation
-        this.yaw = this.transform.eulerAngles.y;
-        this.pitch = this.transform.eulerAngles.x;
+        yaw = transform.eulerAngles.y;
+        pitch = transform.eulerAngles.x;
 
         gameMana = GameManager.instance;
     }
 
     private void Update()
     {
-        // Only work with the Left Alt pressed
-        //if (Input.GetKey(KeyCode.LeftControl))
-        //{
-            if (Input.GetMouseButton(1))
-            {
-                this.yaw += this.lookSpeedH * Input.GetAxis("Mouse X");
-                this.pitch -= this.lookSpeedV * Input.GetAxis("Mouse Y");
+        holdingShiftSpeedMultiplier = Input.GetKey(KeyCode.LeftShift) ? 2 : 1;
+        holdingMouseWheel = Input.GetMouseButton(2);
 
-                this.transform.eulerAngles = new Vector3(this.pitch, this.yaw, 0f);
-            }
+        //Girar
+        if (Input.GetMouseButton(1))
+        {
+            yaw += lookSpeedH * Input.GetAxis("Mouse X");
+            pitch -= lookSpeedV * Input.GetAxis("Mouse Y");
 
-            //drag camera around with Middle Mouse
-            if (Input.GetMouseButton(2))
-            {
-                transform.Translate(-Input.GetAxisRaw("Mouse X") * Time.deltaTime * dragSpeed, -Input.GetAxisRaw("Mouse Y") * Time.deltaTime * dragSpeed, 0);
-            }
+            transform.eulerAngles = new Vector3(pitch, yaw, 0f);
+        }
 
-            //if (Input.GetMouseButton(1))
-            //{
-                //Zoom in and out with Right Mouse
-               // this.transform.Translate(0, 0, Input.GetAxisRaw("Mouse X") * this.zoomSpeed * .07f, Space.Self);
-            //}
+        //Moure
+        float axisSpeedH = (holdingMouseWheel ? 1 : 0) * -Input.GetAxis("Mouse X") + Input.GetAxisRaw("Horizontal") * 0.5f;
+        transform.Translate(axisSpeedH * Time.unscaledDeltaTime * dragSpeed * holdingShiftSpeedMultiplier, 
+            (holdingMouseWheel ? 1 : 0) * -Input.GetAxisRaw("Mouse Y") * Time.unscaledDeltaTime * dragSpeed * holdingShiftSpeedMultiplier, 
+            0);
 
-            //Zoom in and out with Mouse Wheel
-            this.transform.Translate(0, 0, Input.GetAxis("Mouse ScrollWheel") * this.zoomSpeed, Space.Self);
-        //}
+        //Avançar
+        float axisSpeed = Input.GetAxis("Mouse ScrollWheel") + Input.GetAxisRaw("Vertical") * 0.035f;
+        transform.Translate(0, 0, Time.unscaledDeltaTime * axisSpeed * zoomSpeed * holdingShiftSpeedMultiplier, Space.Self);
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            if(gameMana.individuSeleccionat == null)
+            if (gameMana.individuSeleccionat == null)
             {
                 return;
             }

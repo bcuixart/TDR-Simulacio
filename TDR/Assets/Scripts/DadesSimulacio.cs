@@ -16,13 +16,10 @@ public class DadesEspecie
     public string nom;
 
     public List<int> nombreIndividus;
+    public List<int> nombreIndividusInfectats;
+    public List<float> percentatgeInfectats;
 
-    public List<float> velocitatMitjana;
-    public List<float> deteccioMitjana;
-    public List<float> ansiaReproductivaMitjana;
-    public List<float> colorMitjana;
-    public List<float> atractiuMitjana;
-    public List<float> gestacioMitjana;
+    public List<float> salutMitjana;
 
     public DadesEspecie(int _id, string _nom)
     {
@@ -30,13 +27,10 @@ public class DadesEspecie
         nom = _nom;
 
         nombreIndividus = new List<int>();
+        nombreIndividusInfectats = new List<int>();
+        percentatgeInfectats = new List<float>();
 
-        velocitatMitjana = new List<float>();
-        deteccioMitjana = new List<float>();
-        ansiaReproductivaMitjana = new List<float>();
-        colorMitjana = new List<float>();
-        atractiuMitjana = new List<float>();
-        gestacioMitjana = new List<float>();
+        salutMitjana = new List<float>();
 
         return;
     }

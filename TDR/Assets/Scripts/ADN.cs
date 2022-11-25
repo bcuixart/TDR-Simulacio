@@ -3,20 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //Classe que gestiona coses relacionades amb l'ADN, com ara la reproducció
-public static class ADN
+public class ADN
 {
+    public ADN(int randomSeed)
+    {
+        Random.InitState(randomSeed);
+
+        return;
+    }
+
     #region Mitosi
     //Fer la mitosi: torna el mateix genoma que el progenitor però amb possibilitat de mutació.
     //La veritat és que no sé ni si la utilitzaré, però bueno, ja la he feta.
-    public static Genoma Mitosi(Genoma progenitor)
+    public static Genoma Mitosi(Genoma progenitor, float probabilitatMutacio)
     {
         //Creem una llista de gens pel descendent, la qual s'anirà omplint.
         List<Gen> gensDescendent = new List<Gen>();
 
-        //Per cada gen del progenitor, el repliquem. Hi ha una probabilitat del 5% que muti.
+        //Per cada gen del progenitor, el repliquem. Hi ha una probabilitat que muti.
         foreach (Gen gen in progenitor.gens)
         {
-            Gen genDescendent = ReplicarGenMitosi(gen);
+            Gen genDescendent = ReplicarGenMitosi(gen, probabilitatMutacio);
 
             gensDescendent.Add(genDescendent);
         }
@@ -25,16 +32,16 @@ public static class ADN
         return new Genoma(progenitor.genere, gensDescendent);
     }
 
-    static Gen ReplicarGenMitosi(Gen genProgenitor)
+    static Gen ReplicarGenMitosi(Gen genProgenitor, float probabilitatMutacio)
     {
         //Partim del gen del progenitor
         float gen = genProgenitor.gen;
 
-        //La probabilitat de mutació és del 10%
+        //Hi ha una probabilitat de mutació
         float probabilitat = Random.value;
-        if(probabilitat <= 0.1)
+        if(probabilitat <= (probabilitatMutacio / 100f))
         {
-            gen += Random.Range(-0.5f, 0.5f);
+            gen += Random.Range(-1f, 1f);
         }
 
         //Ens assegurem que el gen no sigui major de 1 ni menor de -1
@@ -47,7 +54,7 @@ public static class ADN
 
     #region Meiosi
     //Fer la meiosi: barrejar els gens de dos progenitors
-    public static Genoma Meiosi(Genoma progenitor1, Genoma progenitor2)
+    public Genoma Meiosi(Genoma progenitor1, Genoma progenitor2, float probabilitatMutacio)
     {
         //Creem una llista de gens pel descendent, la qual s'anirà omplint.
         List<Gen> gensDescendent = new List<Gen>();
@@ -55,7 +62,7 @@ public static class ADN
         //Per cada gen dels progenitors, el repliquem.
         for (int i = 0; i < progenitor1.gens.Count; i++)
         {
-            Gen genDescendent = ReplicarGenMeiosi(progenitor1.gens[i], progenitor2.gens[i]);
+            Gen genDescendent = ReplicarGenMeiosi(progenitor1.gens[i], progenitor2.gens[i], probabilitatMutacio);
 
             gensDescendent.Add(genDescendent);
         }
@@ -68,7 +75,7 @@ public static class ADN
         return new Genoma(genere, gensDescendent);
     }
 
-    static Gen ReplicarGenMeiosi(Gen genProgenitorPare, Gen genProgenitorMare)
+    static Gen ReplicarGenMeiosi(Gen genProgenitorPare, Gen genProgenitorMare, float probabilitatMutacio)
     {
         //Partim dels gens del progenitors
         float gen1 = genProgenitorPare.gen;
@@ -118,11 +125,11 @@ public static class ADN
         }
         
 
-        //A part d'això, hi ha una probabilitat de mutació del 10%
+        //A part d'això, hi ha una probabilitat de mutació
         float probabilitat = Random.value;
-        if (probabilitat <= 0.1)
+        if (probabilitat <= (probabilitatMutacio / 100f))
         {
-            nouGen += Random.Range(-0.5f, 0.5f);
+            nouGen += Random.Range(-1f, 1f);
         }
 
         //Ens assegurem que el gen no sigui major de 1 ni menor de -1

@@ -1,0 +1,112 @@
+{
+    "nomSimulacio": "dawadwa",
+    "ubicacioSimulacio": "D:/Documentos/TDR-Simulacio/TDR/Assets\\Simulacions\\dawadwa.json",
+    "dataCreacio": "18/09/2022 22:52:01",
+    "probabilitatMutacio": 10.0,
+    "tempsMaxim": -1.0,
+    "tempsTotal": 1.578341007232666,
+    "randomSeed": 94,
+    "individusPerFerApareixerNormal": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+    ],
+    "individusPerFerApareixerPersonalitzat": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+    ],
+    "notificacions": [
+        {
+            "tipus": 0,
+            "text": "00:00 - Inicia la simulació."
+        }
+    ],
+    "finalitzada": true,
+    "dades": {
+        "especiesNormals": [
+            {
+                "id": 0,
+                "nom": "Gallina",
+                "nombreIndividus": [
+                    2
+                ],
+                "nombreIndividusInfectats": [
+                    0
+                ],
+                "salutMitjana": [
+                    0.0
+                ]
+            },
+            {
+                "id": 1,
+                "nom": "Guineu",
+                "nombreIndividus": [
+                    0
+                ],
+                "nombreIndividusInfectats": [
+                    0
+                ],
+                "salutMitjana": []
+            },
+            {
+                "id": 2,
+                "nom": "Conill",
+                "nombreIndividus": [
+                    0
+                ],
+                "nombreIndividusInfectats": [
+                    0
+                ],
+                "salutMitjana": []
+            }
+        ],
+        "especiesPersonalitzades": [
+            {
+                "id": 0,
+                "nom": "IR-N",
+                "nombreIndividus": [
+                    0
+                ],
+                "nombreIndividusInfectats": [
+                    0
+                ],
+                "salutMitjana": []
+            }
+        ]
+    }
+}

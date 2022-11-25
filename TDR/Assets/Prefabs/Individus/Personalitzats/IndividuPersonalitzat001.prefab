@@ -93,8 +93,9 @@ GameObject:
   - component: {fileID: 341644842045015943}
   - component: {fileID: 4280200515382032960}
   - component: {fileID: 4280200515382032991}
+  - component: {fileID: -5177111172047046733}
   m_Layer: 8
-  m_Name: IndividuPersonalitzatProva
+  m_Name: IndividuPersonalitzat001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -137,63 +138,45 @@ MonoBehaviour:
     dietaSecundaria: 
     dietaTerciaria: 
     depredadors: 
-    velocitatCaminarBase: 0
-    velocitatCaminarVariacio: 0
-    velocitatCorrerBase: 0
-    velocitatCorrerVariacio: 0
-    tempsAfamacioBase: 0
-    tempsAfamacioVariacio: 0
-    tempsAssedegamentBase: 0
-    tempsAssedegamentVariacio: 0
-    tempsGanesReproduccioBase: 0
-    tempsGanesReproduccioVariacio: 0
-    tempsGestacioBase: 0
-    tempsGestacioVariacio: 0
+    velocitatCaminar: 0
+    velocitatCorrer: 0
+    tempsAfamacio: 0
+    tempsAssedegament: 0
+    tempsGanesReproduccio: 0
+    tempsGestacio: 0
     fillsMinims: 0
     fillsMaxims: 0
-    tempsDesenvolupamentCriesBase: 0
-    tempsDesenvolupamentCriesVariacio: 0
-    desenvolupamentCriesVariacio: 0
-    deteccioBase: 0
-    deteccioVariacio: 0
-    temperaturaBase: 0
-    temperaturaVariacio: 0
+    tempsDesenvolupamentCries: 0
+    deteccio: 0
     grups: 0
     grupsMaxim: 0
   personalitzat: 0
   genoma:
     genere: 0
     gens:
-    - nomGen: Velocitat
+    - nomGen: Salut
       gen: 0
       exclusivitatGen: 0
-    - nomGen: "Detecci\xF3"
-      gen: 0
-      exclusivitatGen: 0
-    - nomGen: "\xC0nsia reproductiva"
-      gen: 0
-      exclusivitatGen: 0
-    - nomGen: Color
-      gen: 0
-      exclusivitatGen: 0
-    - nomGen: Atractiu
-      gen: 0
-      exclusivitatGen: 1
-    - nomGen: "Gestaci\xF3"
-      gen: 0
-      exclusivitatGen: 2
   estat: 0
   gana: 0
   set: 0
   ganesDeReproduirse: 0
+  adult: 0
+  percentatgeDesenvolupament: 1
+  infectat: 0
+  particulesVirus: {fileID: 0}
   embarassada: 0
   procesEmbaras: 0
   fillPrefab: {fileID: 4280200515382032989}
   ulls: {fileID: 4280200515382032961}
+  anim: {fileID: 0}
+  model: {fileID: 3062258127132292475}
   agent: {fileID: 4280200515382032960}
   _renderer: {fileID: 0}
+  textures: []
   parellaActual: {fileID: 0}
   preparatPerCopular: 0
+  posicioAtzarSpawn: 0
 --- !u!114 &4280200515382032961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,3 +254,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &-5177111172047046733
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4280200515382032989}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

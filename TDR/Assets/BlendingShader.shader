@@ -1,4 +1,7 @@
-﻿Shader "Unlit/BlendingShader"
+﻿// Upgrade NOTE: replaced 'UNITY_INSTANCE_ID' with 'UNITY_VERTEX_INPUT_INSTANCE_ID'
+// Upgrade NOTE: upgraded instancing buffer 'MyProperties' to new syntax.
+
+Shader "Unlit/BlendingShader"
 {
     Properties
     {
@@ -24,6 +27,7 @@
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            #pragma multi_compile_instancing
             // make fog work
             #pragma multi_compile_fog
 
@@ -33,6 +37,7 @@
             {
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
             struct v2f
@@ -40,6 +45,7 @@
                 float2 uv : TEXCOORD0;
                 UNITY_FOG_COORDS(1)
                 float4 vertex : SV_POSITION;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
             sampler2D _MainTex;
@@ -74,6 +80,7 @@
                 col.rgb += _SelectedEmission.rgb * _EmissionAmount;
                 // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
+
                 return col;
             }
 

@@ -5,7 +5,9 @@ using UnityEngine;
 public class DadesManager : MonoBehaviour
 {
     public List<int> nombreIndividusNormals;
+    public List<int> nombreIndividusNormalsInfectats;
     public List<int> nombreIndividusPersonalitzats;
+    public List<int> nombreIndividusPersonalitzatsInfectats;
 
     public DadesSimulacio dades;
 
@@ -20,100 +22,84 @@ public class DadesManager : MonoBehaviour
         copsComptats = 0;
     }
 
-    void Start()
+    IEnumerator Start()
     {
         gameMana = GameManager.instance;
 
-        InvokeRepeating("ComptarIndividus", 10, 30);
+        yield return new WaitUntil(() => gameMana.comencat);
+
+        InvokeRepeating("ComptarIndividus", 0, 30);
     }
 
     void ComptarIndividus()
     {
+        if (gameMana.arribatTempsMaxim)
+        {
+            return;
+        }
+
         for (int i = 0; i < nombreIndividusNormals.Count; i++)
         {
             // if (nombreIndividusNormals[i] > 0)
             //{
             DadesEspecie dads = dades.especiesNormals[i];
+
             List<int> nombs = dads.nombreIndividus;
             nombs.Add(nombreIndividusNormals[i]);
+
+            List<int> nombsInf = dads.nombreIndividusInfectats;
+            nombsInf.Add(nombreIndividusNormalsInfectats[i]);
+
+            List<float> nombsPer = dads.percentatgeInfectats;
+            float percentatge = (float) nombreIndividusNormalsInfectats[i] / (float) nombreIndividusNormals[i];
+            nombsPer.Add(100f * percentatge);
 
             if (nombreIndividusNormals[i] <= 0)
             {
                 continue;
             }
-            float vel = 0;
-            float det = 0;
-            float aR = 0;
-            float clr = 0;
-            float atr = 0;
-            float gest = 0;
 
-            foreach (Individu ind in gameMana.individusNormals[0].individus)
+            float sal = 0;
+
+            foreach (Individu ind in gameMana.individusNormals[i].individus)
             {
-                vel += ind.genoma.gens[0].gen;
-                det += ind.genoma.gens[1].gen;
-                aR += ind.genoma.gens[2].gen;
-                clr += ind.genoma.gens[3].gen;
-                atr += ind.genoma.gens[4].gen;
-                gest += ind.genoma.gens[5].gen;
+                sal += ind.genoma.gens[0].gen;
             }
 
-            vel /= gameMana.individusNormals[i].individus.Count;
-            det /= gameMana.individusNormals[i].individus.Count;
-            aR /= gameMana.individusNormals[i].individus.Count;
-            clr /= gameMana.individusNormals[i].individus.Count;
-            atr /= gameMana.individusNormals[i].individus.Count;
-            gest /= gameMana.individusNormals[i].individus.Count;
+            sal /= gameMana.individusNormals[i].individus.Count;
 
-            dades.especiesNormals[i].velocitatMitjana.Add(vel);
-            dades.especiesNormals[i].deteccioMitjana.Add(det);
-            dades.especiesNormals[i].ansiaReproductivaMitjana.Add(aR);
-            dades.especiesNormals[i].colorMitjana.Add(clr);
-            dades.especiesNormals[i].atractiuMitjana.Add(atr);
-            dades.especiesNormals[i].gestacioMitjana.Add(gest);
+            dades.especiesNormals[i].salutMitjana.Add(sal);
         }
 
         for (int i = 0; i < nombreIndividusPersonalitzats.Count; i++)
         {
             DadesEspecie dads = dades.especiesPersonalitzades[i];
+
             List<int> nombs = dads.nombreIndividus;
             nombs.Add(nombreIndividusPersonalitzats[i]);
+
+            List<int> nombsInf = dads.nombreIndividusInfectats;
+            nombsInf.Add(nombreIndividusPersonalitzatsInfectats[i]);
+
+            List<float> nombsPer = dads.percentatgeInfectats;
+            float percentatge = (float)nombreIndividusPersonalitzatsInfectats[i] / (float)nombreIndividusPersonalitzats[i];
+            nombsPer.Add(100f * percentatge);
 
             if (nombreIndividusPersonalitzats[i] <= 0)
             {
                 continue;
             }
 
-            float vel = 0;
-            float det = 0;
-            float aR = 0;
-            float clr = 0;
-            float atr = 0;
-            float gest = 0;
+            float sal = 0;
 
             foreach (Individu ind in gameMana.individusPersonalitzats[0].individus)
             {
-                vel += ind.genoma.gens[0].gen;
-                det += ind.genoma.gens[1].gen;
-                aR += ind.genoma.gens[2].gen;
-                clr += ind.genoma.gens[3].gen;
-                atr += ind.genoma.gens[4].gen;
-                gest += ind.genoma.gens[5].gen;
+                sal += ind.genoma.gens[0].gen;
             }
 
-            vel /= gameMana.individusPersonalitzats[i].individus.Count;
-            det /= gameMana.individusPersonalitzats[i].individus.Count;
-            aR /= gameMana.individusPersonalitzats[i].individus.Count;
-            clr /= gameMana.individusPersonalitzats[i].individus.Count;
-            atr /= gameMana.individusPersonalitzats[i].individus.Count;
-            gest /= gameMana.individusPersonalitzats[i].individus.Count;
+            sal /= gameMana.individusPersonalitzats[i].individus.Count;
 
-            dades.especiesPersonalitzades[i].velocitatMitjana.Add(vel);
-            dades.especiesPersonalitzades[i].deteccioMitjana.Add(det);
-            dades.especiesPersonalitzades[i].ansiaReproductivaMitjana.Add(aR);
-            dades.especiesPersonalitzades[i].colorMitjana.Add(clr);
-            dades.especiesPersonalitzades[i].atractiuMitjana.Add(atr);
-            dades.especiesPersonalitzades[i].gestacioMitjana.Add(gest);
+            dades.especiesPersonalitzades[i].salutMitjana.Add(sal);
         }
 
         copsComptats++;
