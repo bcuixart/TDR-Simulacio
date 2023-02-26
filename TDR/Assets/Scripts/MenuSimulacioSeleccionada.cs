@@ -23,7 +23,9 @@ public class MenuSimulacioSeleccionada : MonoBehaviour
     [SerializeField] Text tempsMaximText;
     [SerializeField] Text tempsTotalText;
     [SerializeField] Text variabilitatText;
-    [SerializeField] Slider variabilitatSlider;
+    [SerializeField] Slider variabilitatSlider;    
+    [SerializeField] Text infeccioHumansText;
+    [SerializeField] Slider infeccioHumansSlider;
 
     [Header("Notificacions")]
     [SerializeField] GameObject notificacions;
@@ -120,6 +122,9 @@ public class MenuSimulacioSeleccionada : MonoBehaviour
         variabilitatSlider.value = info.probabilitatMutacio;
         variabilitatText.text = info.probabilitatMutacio.ToString("0.00") + "%";
 
+        infeccioHumansSlider.value = info.infeccioHumans;
+        infeccioHumansText.text = info.infeccioHumans.ToString("0.00") + "%";
+
         foreach (Transform child in notificacionsBase)
         {
             Destroy(child.gameObject);
@@ -130,7 +135,15 @@ public class MenuSimulacioSeleccionada : MonoBehaviour
             GameObject GOn = Instantiate(notificacionsPrefab, notificacionsBase);
             GOn.SetActive(true);
 
-            GOn.GetComponentInChildren<Text>().text = not.text;
+            if(!Menu.subnormal || string.IsNullOrEmpty(not.textSubnormal) || string.IsNullOrWhiteSpace(not.textSubnormal))
+            {
+                GOn.GetComponentInChildren<Text>().text = not.text;
+            }
+            else
+            {
+                GOn.GetComponentInChildren<Text>().text = not.textSubnormal;
+            }
+            
         }
     }
 
@@ -192,9 +205,11 @@ public class MenuSimulacioSeleccionada : MonoBehaviour
         if (m)
         {
             graficYMinMax.SetActive(true);
+            menu.Soroll_Seleccionar();
         }
         else
         {
+            menu.Soroll_Tornar();
             if (!graficInfectatsObject.activeSelf)
             {
                 graficYMinMax.SetActive(false);
@@ -209,9 +224,11 @@ public class MenuSimulacioSeleccionada : MonoBehaviour
         if (m)
         {
             graficYMinMax.SetActive(true);
+            menu.Soroll_Seleccionar();
         }
         else
         {
+            menu.Soroll_Tornar();
             if (!graficPoblacioObject.activeSelf)
             {
                 graficYMinMax.SetActive(false);
@@ -222,11 +239,29 @@ public class MenuSimulacioSeleccionada : MonoBehaviour
     public void MostrarGraficPercentatge(bool m)
     {
         graficPercentatgeObject.SetActive(m);
+
+        if (m)
+        {
+            menu.Soroll_Seleccionar();
+        }
+        else
+        {
+            menu.Soroll_Tornar();
+        }
     }
 
     public void MostrarGraficSalut(bool m)
     {
         graficSalutObject.SetActive(m);
+
+        if (m)
+        {
+            menu.Soroll_Seleccionar();
+        }
+        else
+        {
+            menu.Soroll_Tornar();
+        }
     }
 
     public void ComencarRepeticio()

@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> individusPrefabs;
     public GameObject individuPersonalitzatPrefab;
     [SerializeField] GameObject plantaPrefab;
+    [SerializeField] GameObject plantaPrefab2;
     [SerializeField] Transform plantaPrefabBase;
     
     [HideInInspector] public Individu individuSeleccionat;
@@ -52,12 +53,32 @@ public class GameManager : MonoBehaviour
     public bool meteorit;
     [SerializeField] bool optimitzacioDesesperada;
 
+    [SerializeField] AudioSource audioS;
+    [SerializeField] AudioClip devMode_On;
+
+    [SerializeField] AudioSource ambientSempreS;
+    [SerializeField] AudioSource ambientNitS;
+
+    [SerializeField] AudioClip ambientSubnormalSempre;
+    [SerializeField] AudioClip ambientSubnormalNit;
+
     DadesManager dades;
 
     public static float probabilitatSalt;
 
+    int currentPlantaPrefabType;
+
     void Awake()
     {
+        if (Menu.subnormal)
+        {
+            ambientSempreS.clip = ambientSubnormalSempre;
+            ambientNitS.clip = ambientSubnormalNit;
+        }
+
+        ambientSempreS.Play();
+        ambientNitS.Play();
+
         virusPosicioFixa.SetActive(false);
 
         if (InformacioSimulacio.instance != null)
@@ -67,7 +88,7 @@ public class GameManager : MonoBehaviour
 
         if (!info.finalitzada)
         {
-            int s = Random.Range(0, 101);
+            int s = Random.Range(0, 100000);
             info.randomSeed = s;
 
             info.dataCreacio = System.DateTime.Now.ToString();
@@ -95,6 +116,8 @@ public class GameManager : MonoBehaviour
     public IEnumerator Comencacio()
     {
         dades = DadesManager.instance;
+
+        currentPlantaPrefabType = 1;
 
         string[] files = Directory.GetFiles(Application.dataPath + "/Especies");
         foreach (string file in files)
@@ -233,9 +256,15 @@ public class GameManager : MonoBehaviour
     {
         if(Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.P))
         {
-            Menu.devMode = true;
             Canvas.instance.botoDevModeRepeticio.SetActive(true);
             Canvas.instance.devModeIndicador.SetActive(true);
+
+            if (!Menu.devMode) {
+                Canvas.instance.devModeEfectAnim.SetTrigger("In");
+                audioS.PlayOneShot(devMode_On);
+            }
+
+            Menu.devMode = true;
         }
 
         if (Input.GetKeyDown(KeyCode.F11))
@@ -250,6 +279,7 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            Canvas.instance.Soroll_Seleccionar();
             Pausa(!pausat);
         }
 
@@ -263,6 +293,8 @@ public class GameManager : MonoBehaviour
             {
                 Canvas.instance.pausaFons.SetActive(true);
                 Pausa(true);
+
+                Canvas.instance.Soroll_Seleccionar();
             }
         }
 
@@ -293,13 +325,15 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.I) && Menu.devMode)
         {
-            if(individuSeleccionat == null)
+            if(individuSeleccionat == null || individuSeleccionat.infectat)
             {
                 return;
             }
 
             individuSeleccionat.particulesVirus.SetActive(true);
             individuSeleccionat.infectat = true;
+
+            individuSeleccionat.GetComponentInChildren<IndividuAnimEvents>().SorollInfectat();
 
             RegistrarInfectat(individuSeleccionat);
         }
@@ -429,7 +463,9 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        GameObject GO = Instantiate(plantaPrefab, plantaPrefabBase);
+        GameObject GO = Instantiate((currentPlantaPrefabType == 1) ? plantaPrefab : plantaPrefab2, plantaPrefabBase);
+        currentPlantaPrefabType *= -1;
+
         Planta p = GO.GetComponent<Planta>();
 
         GO.name = plantaPrefab.name;
@@ -478,11 +514,6 @@ public class GameManager : MonoBehaviour
             AfegirNotificacio(new Notificacio(TipusNotificacio.FinalSimulacioArbitrari, elapsed, "", 0));
         }
 
-        if (!info.finalitzada)
-        {
-            StartCoroutine(EventMeteorit());
-        }
-
         info.finalitzada = true;
         info.tempsTotal = elapsed;
 
@@ -497,7 +528,7 @@ public class GameManager : MonoBehaviour
             stream.Close();
         }
 
-        Time.timeScale = 1;
+        StartCoroutine(EventMeteorit());
     }
 
     void OptimitzacioDesesperada()
@@ -513,12 +544,25 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator EventMeteorit()
     {
+        if (!Menu.subnormal)
+        {
+            Time.timeScale = 1;
+            SceneManager.LoadScene("Menu");
+
+            yield break;
+        }
+
         meteorit = true;
 
         Pausa(false);
         PosarVelocitat(1);
 
         eventMeteorit.SetActive(true);
+
+        Canvas.instance.TancarDades();
+        Canvas.instance.TancarIndividuSeleccionat();
+        Canvas.instance.TancarNotificacions();
+        Canvas.instance.TancarTemps();
 
         Light l = solAnim.GetComponent<Light>();
         Color c = new Color32(128, 3, 3, 255);
@@ -542,8 +586,9 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        Destroy(GameObject.Find("Decoracions"));
-        Destroy(GameObject.Find("Plantitas"));
+        Destroy(GameObject.Find("Decoracions"), 0.2f);
+        Destroy(GameObject.Find("Plantitas"), 0.2f);
+        Destroy(GameObject.Find("Virus"), 0.2f);
 
         yield return new WaitForSeconds(10);
 

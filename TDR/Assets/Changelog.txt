@@ -3,7 +3,7 @@
 -Els individus seleccionats ara fan brilli-brilli per destacar-los.
 -Si apretes [F], la càmera fa un zoom dramático a l'individu seleccionat, si existeix.
 -Arreglat un error que feia que el botó de refrescar gràfics no fes una puta merda.
--Els individus morts ara desapareixen, igual que el meu papá.
+-Els individus morts ara desapareixen,.
 -Arreglat un error que feia que els individus puguessin registrar-se com a morts diverses vegades, de tal manera que la població baixava més del compte (-1 gallines).
 -Si apretes [ESC] durant una simulació, ara apareix un menú amb el qual pots tornar al menú principal.
 -Arreglats diversos errors relacionats amb pausar i continuar la simulació.
@@ -95,7 +95,7 @@
 -Canvi a l'escenari per impedir que els animals puguin aparèixer a les roques i per culpa d'això no poder moure's correctament.
 -S'ha fet un model de conill, però l'espècie no està implementada encara perquè...
 -S'han fet canvis al MODO DESARROLLADOR. S'activa apretant Shift+P en el menú (Això és un secret, no ho diguis a ningú!). Permet editar i afegir espècies predeterminades. Força útil, saps, per un DESARROLLADOR que vol implementar més espècies.
--A més, per fer-ho encara més molón, si s'activa el MODO DESARROLLADOR, apareix un text a la vora superior dreta de la pantalla que ho indica juntament amb unes ulleres de sol molt xupis. Qui ho veurà això? Ningú. Només jo. Però és molón.
+-A més, per fer-ho encara més molón, si s'activa el MODO DESARROLLADOR, apareix un text a la vora superior dreta de la pantalla que ho indica juntament amb unes ulleres de sol molt xupis. Qui veurà això? Ningú. Només jo. Però és molón.
 -Diversos paràmetres d'espècie que no s'utilitzaven per res s'han fet encara més obsolets, tot amagant-los de la nova interfície. Seran eliminats en els propers dies. Els més notoris són el temps d'assedegament i la distància de vista. No servien per res, arribats a aquest punt casi millor els eliminem i s'acabó.
 
 31/8/22
@@ -214,3 +214,50 @@
 -Ara es pot veure el gràfic de percentatges en la secció d'anàlisi de resultats.
 -Una nova funció pel MODO DESARROLLADOR. Ara es pot fer una ronda de captures molt èpica on es guarden els gràfics de cada simulació com a pngs.
 -Si s'apreta [C] en el menú principal en el MODO DESARROLLADOR, el menú deixa de moure's, això va molt bé per fer captures.
+
+14/2/23
+-Canvis per publicar la versió pels premis:
+-El MODO DESARROLLADOR ara té una animació chachi i un soroll èpic a l'aparèixer. A més, en el text ja no posa "Mode desenvolupador", quina merda. Ara posa "MODO DESARROLLADOR", com ha de ser.
+-La set ja no apareix a les dades d'individu seleccionat.
+-En el seu lloc apareix si l'animal està o no gestant i, si ho està, el percentatge de gestació.
+-El valor d'infectat també mostra el procés de malaltia.
+
+15/2/23
+-Ja no es poden seleccionar individus que estan a sota de la interficie.
+-Les plantes apareixen correctament a l'altura del terra.
+-La interfície de la simulació ja fa soroll.
+-Ja no es pot accedir a les espècies personalitzades. En realitat segueixen existint, però no aparèixen. Em fa pal eliminar-les. NADIE NUNCA DEBE ENTERARSE MUAJAJAJ
+-Les animacions de la guineu ara són una mica millor. Només una mica.
+-Els humans femella ara tenen animacions diferents als mascles per caminar i estar quietes.
+-Els humans femella ara porten un vestit que és de diferent color als mascles.
+-Les plantes que es generen atzarosament ara poden ser dels dos tipus i no només un.
+-Parlant d'aquestes plantes, s'hi ha eliminat geometria innecessària.
+
+19/2/23
+-Ara es pot accedir a un menú d'ajustaments, tant durant una simulació com al menú principal.
+-En aquest menú es pot canviar la resolució, pantalla completa, qualitat gràfica i volums de: general, interfície, animals i ambient.
+-En teoria el programa hauria de tenir millor rendiment ara per no se què de les llibreries de codi?
+-Canvis mínims a la interfície de pausa i altres.
+-Ara es pot activar el mode estúpid desde el menú principal.
+-Aquest mode canvia el text del títol del programa, les notificacions i els estats d'individu i activa l'event del meteorit.
+-El mode estúpid activa uns sorolls magnífics.
+-El virus ara també desapareix amb el meteorit.
+-Els animals ara fan sorolls al caminar, menjar, copular i infectar-se. Aquests sons tenen una versió diferent en el mode subnormal.
+-Les plantes ara tenen LOD i es culling.
+
+26/2/23
+-S'ha canviat el nom del mode estúpid a mode esbojarrat, molt al meu pesar. Quina desgràcia.
+-Ara es reprodueixen correctament els sons de la interfície en totes les accions del menú principal.
+
+27/2/23
+-L'usuari ara pot triar el percentatge de probabilitat d'infecció dels humans des del menú de simulació. Aquest es guarda en el .json.
+-Els animals ara emeten partícules al morir i copular.
+-Els animals ara es miren correctament al copular.
+-Teòricament els animals ara paren correctament quan son devorats.
+-Afegir i treure individus al menú ja fa soroll.
+-Els sons d'ambient ara canvien en el mode esbojarrat.
+-S'ha redissenyat els humans. Ara tenen la boca més petita, els ulls més ovalats i marrons, canvis als cabells i pestanyegen. Tot plegat, ara fan menys por.
+-Ara hi ha una Lluna orbitant durant la nit.
+-Ara hi ha un menú de controls en la simulació, que s'obre automàticament el primer cop que s'executa el programa.
+-Les llegendes dels gràfics d'una simulació seleccionada ja no es tapen unes a altres, i ara tenen el color correcte.
+-Activar o desactivar els gràfics d'una simulació seleccionada ara fa soroll.

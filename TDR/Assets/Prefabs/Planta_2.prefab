@@ -65,6 +65,9 @@ MonoBehaviour:
   tempsMaximReproduccio: 30
   fillsMinim: 1
   fillsMaxim: 2
+  terraMask:
+    serializedVersion: 2
+    m_Bits: 1024
   posicioAtzarSpawn: 0
 --- !u!114 &7537663393444698721
 MonoBehaviour:
@@ -89,6 +92,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7537663393444698733}
     m_Modifications:
+    - target: {fileID: -9206078293098623279, guid: a636badf8316e9a4ba950d56054e84b1,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: dd7ed0e0892d44049bd50507e1b8bc17, type: 2}
     - target: {fileID: -8679921383154817045, guid: a636badf8316e9a4ba950d56054e84b1,
         type: 3}
       propertyPath: m_RootOrder
@@ -117,7 +125,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: a636badf8316e9a4ba950d56054e84b1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.7
+      value: -0.075
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a636badf8316e9a4ba950d56054e84b1,
         type: 3}
@@ -127,12 +135,12 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: a636badf8316e9a4ba950d56054e84b1,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071067
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a636badf8316e9a4ba950d56054e84b1,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a636badf8316e9a4ba950d56054e84b1,
         type: 3}
@@ -142,7 +150,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: a636badf8316e9a4ba950d56054e84b1,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a636badf8316e9a4ba950d56054e84b1,
         type: 3}
@@ -164,10 +172,55 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: dd7ed0e0892d44049bd50507e1b8bc17, type: 2}
+    - target: {fileID: 599345713916281128, guid: a636badf8316e9a4ba950d56054e84b1,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7053803
+      objectReference: {fileID: 0}
+    - target: {fileID: 599345713916281128, guid: a636badf8316e9a4ba950d56054e84b1,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.70513415
+      objectReference: {fileID: 0}
+    - target: {fileID: 599345713916281128, guid: a636badf8316e9a4ba950d56054e84b1,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.051119167
+      objectReference: {fileID: 0}
+    - target: {fileID: 599345713916281128, guid: a636badf8316e9a4ba950d56054e84b1,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.051101327
+      objectReference: {fileID: 0}
+    - target: {fileID: 599345713916281128, guid: a636badf8316e9a4ba950d56054e84b1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -89.98
+      objectReference: {fileID: 0}
+    - target: {fileID: 599345713916281128, guid: a636badf8316e9a4ba950d56054e84b1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 8.29
+      objectReference: {fileID: 0}
+    - target: {fileID: 760288516214141318, guid: a636badf8316e9a4ba950d56054e84b1,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: dd7ed0e0892d44049bd50507e1b8bc17, type: 2}
     - target: {fileID: 919132149155446097, guid: a636badf8316e9a4ba950d56054e84b1,
         type: 3}
       propertyPath: m_Name
       value: Planta2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742473837712756890, guid: a636badf8316e9a4ba950d56054e84b1,
+        type: 3}
+      propertyPath: m_LODs.Array.data[0].screenRelativeHeight
+      value: 0.039958052
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742473837712756890, guid: a636badf8316e9a4ba950d56054e84b1,
+        type: 3}
+      propertyPath: m_LODs.Array.data[1].screenRelativeHeight
+      value: 0.010908699
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a636badf8316e9a4ba950d56054e84b1, type: 3}

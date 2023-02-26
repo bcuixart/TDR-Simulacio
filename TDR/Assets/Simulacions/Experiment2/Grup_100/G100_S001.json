@@ -3,6 +3,7 @@
     "ubicacioSimulacio": "D:/Documentos/TDR-Simulacio/TDR/Builds/006 - 13.11.2022/TDR_Data\\Simulacions\\Experiment2\\Grup_100\\G100_S001.json",
     "dataCreacio": "22/11/2022 23:42:34",
     "probabilitatMutacio": 100.0,
+    "infeccioHumans": 0.01,
     "tempsMaxim": 1200.0,
     "tempsTotal": 1173.7230224609375,
     "randomSeed": 12,

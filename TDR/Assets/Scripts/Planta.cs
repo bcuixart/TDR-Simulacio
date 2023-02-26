@@ -16,6 +16,9 @@ public class Planta : MonoBehaviour
     public int fillsMinim;
     public int fillsMaxim;
 
+    [Space]
+    [SerializeField] LayerMask terraMask;
+
     public bool posicioAtzarSpawn;
 
     GameManager gameMana;
@@ -23,6 +26,11 @@ public class Planta : MonoBehaviour
     IEnumerator Start()
     {
         gameMana = GameManager.instance;
+
+        if (gameMana.meteorit)
+        {
+            Destroy(gameObject);
+        }
 
         prefabParent = transform.parent;
 
@@ -37,6 +45,8 @@ public class Planta : MonoBehaviour
             Vector3 pos = TrobarPuntAtzar(Vector3.zero, 20, 0);
             transform.position = pos;
 
+            EnganxarseATerra();
+
             fillsMinim = 2;
             fillsMaxim = 10;
 
@@ -44,6 +54,8 @@ public class Planta : MonoBehaviour
 
             yield break;
         }
+
+        EnganxarseATerra();
 
         float temps = Random.Range(tempsMinimReproduccio, tempsMaximReproduccio);
         Invoke("Reproduirse", temps);
@@ -98,5 +110,14 @@ public class Planta : MonoBehaviour
         NavMesh.SamplePosition(randomDirection, out navHit, radi * 2, NavMesh.GetAreaFromName("Sorra"));
 
         return navHit.position;
+    }
+
+    void EnganxarseATerra()
+    {
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position + new Vector3(0, 20, 0), -transform.up, out hit, 200, terraMask))
+        {
+            transform.position = hit.point;
+        }
     }
 }

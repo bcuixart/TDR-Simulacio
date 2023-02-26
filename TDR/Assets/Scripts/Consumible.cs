@@ -26,6 +26,9 @@ public class Consumible : MonoBehaviour
         if (!planta)
         {
             individu.estat = EstatIndividu.SentMenjat;
+
+            individu.anim.speed = 0;
+            individu.agent.ResetPath();
         }
 
         copsConsumible -= velocitatMenjacio;

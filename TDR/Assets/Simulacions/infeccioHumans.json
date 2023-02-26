@@ -1,0 +1,230 @@
+{
+    "nomSimulacio": "infeccioHumans",
+    "ubicacioSimulacio": "D:/Documentos/TDR-Simulacio/TDR/Assets\\Simulacions\\infeccioHumans.json",
+    "dataCreacio": "26/02/2023 13:02:19",
+    "probabilitatMutacio": 10.0,
+    "infeccioHumans": 43.418914794921878,
+    "tempsMaxim": -1.0,
+    "tempsTotal": 173.05718994140626,
+    "randomSeed": 62249,
+    "individusPerFerApareixerNormal": [
+        10,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+    ],
+    "individusPerFerApareixerPersonalitzat": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+    ],
+    "notificacions": [
+        {
+            "tipus": 0,
+            "text": "00:00 - Inicia la simulació.",
+            "textSubnormal": "00:00 - La simulació comença!"
+        },
+        {
+            "tipus": 5,
+            "text": "00:43 - S'infecta el primer humà.",
+            "textSubnormal": "00:43 - Oh, oh! S'infecta el primer humà!"
+        },
+        {
+            "tipus": 1,
+            "text": "02:53 - L'usuari decideix finalitzar la simulació.",
+            "textSubnormal": "02:53 - L'usuari es cansa i convenientment cau un meteorit!"
+        }
+    ],
+    "finalitzada": true,
+    "dades": {
+        "especiesNormals": [
+            {
+                "id": 0,
+                "nom": "Humà",
+                "nombreIndividus": [
+                    10,
+                    10,
+                    10,
+                    10,
+                    10,
+                    10
+                ],
+                "nombreIndividusInfectats": [
+                    0,
+                    0,
+                    1,
+                    1,
+                    2,
+                    3
+                ],
+                "percentatgeInfectats": [
+                    0.0,
+                    0.0,
+                    10.0,
+                    10.0,
+                    20.0,
+                    30.000001907348634
+                ],
+                "salutMitjana": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            {
+                "id": 1,
+                "nom": "Gallina",
+                "nombreIndividus": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "nombreIndividusInfectats": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "percentatgeInfectats": [
+                    NaN,
+                    NaN,
+                    NaN,
+                    NaN,
+                    NaN,
+                    NaN
+                ],
+                "salutMitjana": []
+            },
+            {
+                "id": 2,
+                "nom": "Guineu",
+                "nombreIndividus": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "nombreIndividusInfectats": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "percentatgeInfectats": [
+                    NaN,
+                    NaN,
+                    NaN,
+                    NaN,
+                    NaN,
+                    NaN
+                ],
+                "salutMitjana": []
+            },
+            {
+                "id": 3,
+                "nom": "Conill",
+                "nombreIndividus": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "nombreIndividusInfectats": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "percentatgeInfectats": [
+                    NaN,
+                    NaN,
+                    NaN,
+                    NaN,
+                    NaN,
+                    NaN
+                ],
+                "salutMitjana": []
+            }
+        ],
+        "especiesPersonalitzades": [
+            {
+                "id": 0,
+                "nom": "IR-N",
+                "nombreIndividus": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "nombreIndividusInfectats": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "percentatgeInfectats": [
+                    NaN,
+                    NaN,
+                    NaN,
+                    NaN,
+                    NaN,
+                    NaN
+                ],
+                "salutMitjana": []
+            }
+        ]
+    }
+}

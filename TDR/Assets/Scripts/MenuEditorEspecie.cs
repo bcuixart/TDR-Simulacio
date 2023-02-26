@@ -138,7 +138,6 @@ public class MenuEditorEspecie : MonoBehaviour
 
     public void PosarTempsAfamacio(float val)
     {
-        Debug.Log(val);
         afamacioText.text = val.ToString("0.##") + "% - Gana completa en " + (0.5f * (100f/val)).ToString("0.##") + " segons.";
         especieSeleccionada.tempsAfamacio = val;
     }

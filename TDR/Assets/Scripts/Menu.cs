@@ -8,10 +8,6 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
-    [Header("Conya Oscar")]
-    [SerializeField] GameObject conyaOscarSerio;
-    [SerializeField] GameObject conyaOscarConya;
-
     [Header("Nova simulacio - Ubicacio")]
     [SerializeField] InputField nomSimulacioInput;
     [SerializeField] Text nomSimulacioInputText;
@@ -39,6 +35,7 @@ public class Menu : MonoBehaviour
 
     [Header("Nova simulacio - Altres")]
     [SerializeField] Text probabilitatMutacioText;
+    [SerializeField] Text infeccioHumansText;
     [SerializeField] Text tempsLimitText;
 
     public List<string> filesNormal = new List<string>();
@@ -77,6 +74,30 @@ public class Menu : MonoBehaviour
     [Header("DevMode")]
     [SerializeField] GameObject devModeGameObject;
     [SerializeField] GameObject devModeNovaEspeciePredeterminada;
+    [SerializeField] AudioClip devMode_On;
+    [SerializeField] Animator devModeEfectAnim;
+
+    [Header("ModeSubnormal")]
+    [SerializeField] Toggle subnormalToggle;
+    public static bool subnormal;
+    [SerializeField] GameObject conyatitolSerio;
+    [SerializeField] GameObject conyatitolConya;
+
+    [Header("Audio")]
+    [SerializeField] AudioSource audioS;
+    [SerializeField] AudioClip selectSound;
+    [SerializeField] AudioClip selectSoundSubnormal;
+    [SerializeField] AudioClip tornarSound;
+    [SerializeField] AudioClip tornarSoundSubnormal;
+    [SerializeField] AudioClip subnormal_In_Sound;
+    [SerializeField] AudioClip subnormal_Out_Sound;
+
+    [SerializeField] AudioSource ambientSempreS;
+    [SerializeField] AudioSource ambientNitS;
+    [SerializeField] AudioClip ambientSempreNormal;
+    [SerializeField] AudioClip ambientSempreSubnormal;
+    [SerializeField] AudioClip ambientNitNormal;
+    [SerializeField] AudioClip ambientNitSubnormal;
 
     public static bool devMode;
     int multiplicadorAfegirEspecies;
@@ -113,12 +134,20 @@ public class Menu : MonoBehaviour
         OmplirLlistaEspecies();
 
         CanviarProbabilitatMutacio(0.1f);
+        CanviarInfeccioHumans(0.01f);
         CanviarTempsMaxim(0);
 
         Canvas.obertTemps = false;
         Canvas.obertNotificacions = false;
         Canvas.obertIndividuSeleccionat = false;
         Canvas.obertDades = false;
+
+        int r = PlayerPrefs.GetInt("Subnormal", 0);
+        subnormalToggle.isOn = r == 1;
+
+        subnormal = subnormalToggle.isOn;
+
+        PosarSorollAmbient();
     }
 
     void Update()
@@ -128,11 +157,8 @@ public class Menu : MonoBehaviour
             Screen.fullScreen = !Screen.fullScreen;
         }
 
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            conyaOscarConya.SetActive(!conyaOscarConya.activeSelf);
-            conyaOscarSerio.SetActive(!conyaOscarSerio.activeSelf);
-        }
+        conyatitolConya.SetActive(subnormal);
+        conyatitolSerio.SetActive(!subnormal);
 
         multiplicadorAfegirEspecies = 1;
 
@@ -148,8 +174,16 @@ public class Menu : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P) && multiplicadorAfegirEspecies >= 2)
         {
-            devMode = true;
             devModeGameObject.SetActive(true);
+
+            if (!devMode)
+            {
+                audioS.PlayOneShot(devMode_On);
+            }
+
+            devModeEfectAnim.SetTrigger("In");
+
+            devMode = true;
             devModeNovaEspeciePredeterminada.SetActive(true);
             OmplirLlistaEspecies();
 
@@ -308,6 +342,15 @@ public class Menu : MonoBehaviour
 
     public void PujarNombreIndividus(int id, int quatitat, Text text, bool normal)
     {
+        if(quatitat > 0)
+        {
+            Soroll_Seleccionar();
+        }
+        else
+        {
+            Soroll_Tornar();
+        }
+
         if (normal)
         {
             InformacioSimulacio.instance.individusPerFerApareixerNormal[id] += quatitat * multiplicadorAfegirEspecies;
@@ -375,6 +418,7 @@ public class Menu : MonoBehaviour
 
             Button bt = E.GetComponentInChildren<Button>();
             bt.onClick.AddListener(() => CarregarArxiusNovaUbicacio(Directory.GetParent(path).FullName));
+            bt.onClick.AddListener(() => Soroll_Tornar());
         }
 
         string[] drs = Directory.GetDirectories(path);
@@ -386,6 +430,7 @@ public class Menu : MonoBehaviour
 
             Button bt = C.GetComponentInChildren<Button>();
             bt.onClick.AddListener(() => CarregarArxiusNovaUbicacio(dr));
+            bt.onClick.AddListener(() => Soroll_Seleccionar());
         }
 
         string[] fls = Directory.GetFiles(path);
@@ -443,6 +488,8 @@ public class Menu : MonoBehaviour
             {
                 tx.color = Color.red;
             }
+
+            Soroll_Tornar();
             
             return;
         }
@@ -457,6 +504,8 @@ public class Menu : MonoBehaviour
         CarregarArxiusNovaUbicacio(novaSimulacioUbicacioActual);
 
         novaCarpetaText.text = "";
+
+        Soroll_Seleccionar();
     }
     #endregion
 
@@ -466,6 +515,13 @@ public class Menu : MonoBehaviour
         InformacioSimulacio.instance.probabilitatMutacio = prob * 100f;
 
         probabilitatMutacioText.text = (100 * prob).ToString("0.00") + "%";
+    }
+
+    public void CanviarInfeccioHumans(float prob)
+    {
+        InformacioSimulacio.instance.infeccioHumans = prob * 100f;
+
+        infeccioHumansText.text = (100 * prob).ToString("0.00") + "%";
     }
 
     public void CanviarTempsMaxim(float temps)
@@ -568,6 +624,7 @@ public class Menu : MonoBehaviour
 
             Button bt = E.GetComponentInChildren<Button>();
             bt.onClick.AddListener(() => CarregarArxiusNovaUbicacioSimulacionsAnteriors(Directory.GetParent(path).FullName));
+            bt.onClick.AddListener(() => Soroll_Tornar());
         }
 
         string[] drs = Directory.GetDirectories(path);
@@ -579,6 +636,7 @@ public class Menu : MonoBehaviour
 
             Button bt = C.GetComponentInChildren<Button>();
             bt.onClick.AddListener(() => CarregarArxiusNovaUbicacioSimulacionsAnteriors(dr));
+            bt.onClick.AddListener(() => Soroll_Seleccionar());
         }
 
         string[] fls = Directory.GetFiles(path);
@@ -600,6 +658,8 @@ public class Menu : MonoBehaviour
 
     public void SeleccionarSimulacioAnterior(string path, Text txt)
     {
+        Soroll_Seleccionar();
+
         if(simulacioAnteriorSeleccionadaArxiuText != null)
         {
             simulacioAnteriorSeleccionadaArxiuText.fontStyle = FontStyle.Normal;
@@ -640,11 +700,12 @@ public class Menu : MonoBehaviour
 
     public void ObrirSimulacioAnteriorGrafic(int id)
     {
+        Soroll_Seleccionar();
         menuSimulacioSeleccionada.OmplirGrafic(id);
     }
     #endregion
 
-    #region Cam i canvasAnim
+    #region Cam i canvasAnim i Sorolls
     public void PosarCamAnim(float animState)
     {
         camAnim.SetFloat("Girar", animState);
@@ -678,6 +739,59 @@ public class Menu : MonoBehaviour
     public void PosarCanvasSimulacionsAnteriorsAnim(float animState)
     {
         canvasAnim.SetFloat("Menu_SimulacionsAnteriors", animState);
+    }
+
+    public void PosarCanvasAjustamentsAnim(float animState)
+    {
+        canvasAnim.SetFloat("Menu_Ajustaments", animState);
+    }
+
+    public void ModeSubnormal(bool _s)
+    {
+        subnormal = _s;
+
+        if (subnormal)
+        {
+            audioS.PlayOneShot(subnormal_In_Sound);
+        }
+        else
+        {
+            audioS.PlayOneShot(subnormal_Out_Sound);
+        }
+
+        PlayerPrefs.SetInt("Subnormal", subnormal ? 1 : 0);
+
+        PosarSorollAmbient();
+    }
+
+    public void Soroll_Seleccionar()
+    {
+        audioS.PlayOneShot(subnormal ? selectSoundSubnormal : selectSound);
+    }
+
+    public void Soroll_Tornar()
+    {
+        audioS.PlayOneShot(subnormal ? tornarSoundSubnormal : tornarSound);
+    }
+
+    public void PosarSorollAmbient()
+    {
+        ambientNitS.Stop();
+        ambientSempreS.Stop();
+
+        if (!subnormal)
+        {
+            ambientSempreS.clip = ambientSempreNormal;
+            ambientNitS.clip = ambientNitNormal;
+        }
+        else
+        {
+            ambientSempreS.clip = ambientSempreSubnormal;
+            ambientNitS.clip = ambientNitSubnormal;
+        }
+
+        ambientNitS.Play();
+        ambientSempreS.Play();
     }
     #endregion
 

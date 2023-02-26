@@ -4,8 +4,8 @@
     "nomPlural": "Guineus",
     "articleGenere": 1,
     "dietaNormal": [
-        0,
-        2
+        1,
+        3
     ],
     "dietaPersonalitzada": [],
     "velocitat": 5.0,

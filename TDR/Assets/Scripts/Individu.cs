@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 //Tots els estats (Coses que poden fer) els individus
 public enum EstatIndividu { Normal, Dormint, BuscantMenjar, Menjant, Caçant, BuscantAigua, Bevent, BuscantParella, Copulant, DonantALlum, Mort, SentMenjat}
@@ -39,23 +40,26 @@ public class Individu : MonoBehaviour
     public GameObject particulesVirus;
 
     [SerializeField] float multiplicadorDistanciaVirus;
+    [SerializeField] float probabilitatInfeccioVirus;
 
-    [SerializeField] float procesMalaltia;
+    public float procesMalaltia;
 
     [Header("Embaràs i fills")]
     public bool embarassada;
-    [SerializeField] float procesEmbaras;
+    public float procesEmbaras;
 
     [SerializeField] GameObject fillPrefab;
 
     [Header("Components")]
     [SerializeField] UllsIndividu ulls;
-    [SerializeField] Animator anim;
+    public Animator anim;
     [SerializeField] Transform model;
-    [SerializeField] NavMeshAgent agent;
+    public NavMeshAgent agent;
     public Renderer[] _renderers;
     [SerializeField] Texture[] textures;
     [SerializeField] Texture textureDefecte;
+    [SerializeField] ParticleSystem particulesCopular;
+    [SerializeField] GameObject particulesMort;
     GameManager gameMana;
 
     [Header("Mascle-femella")]
@@ -113,6 +117,7 @@ public class Individu : MonoBehaviour
         }
 
         multiplicadorDistanciaVirus = -0.5f * genoma.gens[0].gen + 0.5f;
+        probabilitatInfeccioVirus = diferenciaMascleFemella ? 0.01f * gameMana.info.infeccioHumans : especie.probabilitatInfeccio;
 
         agent.speed = especie.velocitat;
 
@@ -175,6 +180,10 @@ public class Individu : MonoBehaviour
             {
                 gameMana.DesregistrarInfectat(this);
             }
+
+            particulesMort.transform.SetParent(null);
+            particulesMort.SetActive(true);
+            Destroy(particulesMort, 3);
 
             Destroy(gameObject);
 
@@ -383,6 +392,8 @@ public class Individu : MonoBehaviour
                 estat = EstatIndividu.Copulant;
                 parellaActual.estat = EstatIndividu.Copulant;
 
+                particulesCopular.Play();
+
                 transform.LookAt(ind.position);
                 parellaActual.transform.LookAt(transform.position);
             }
@@ -392,6 +403,11 @@ public class Individu : MonoBehaviour
     void Actuar_Copulant()
     {
         anim.SetBool("Copulant", true);
+
+        if(parellaActual != null)
+        {
+            transform.LookAt(parellaActual.transform.position);
+        }
 
         agent.ResetPath();
 
@@ -415,6 +431,8 @@ public class Individu : MonoBehaviour
         }
 
         estat = EstatIndividu.Normal;
+
+        particulesCopular.Stop();
 
         anim.SetBool("Copulant", false);
     }
@@ -467,6 +485,11 @@ public class Individu : MonoBehaviour
 
     void OnMouseDown()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         if(gameMana.individuSeleccionat != null)
         {
             gameMana.individuSeleccionat.PosarColorSeleccionat(0);
@@ -599,6 +622,8 @@ public class Individu : MonoBehaviour
         particulesVirus.SetActive(true);
 
         gameMana.RegistrarInfectat(this);
+
+        GetComponentInChildren<IndividuAnimEvents>().SorollInfectat();
     }
 
     void OnTriggerEnter(Collider col)
@@ -615,7 +640,6 @@ public class Individu : MonoBehaviour
 
         if (col.CompareTag("VirusPersona"))
         {
-            Debug.Log("Hola!");
             probabilitatPercentatgeActual = 0;
             return;
         }
@@ -645,7 +669,7 @@ public class Individu : MonoBehaviour
             return;
         }
 
-        if(probabilitatPercentatgeActual > especie.probabilitatInfeccio)
+        if(probabilitatPercentatgeActual > probabilitatInfeccioVirus)
         {
             return;
         }

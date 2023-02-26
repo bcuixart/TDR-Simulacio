@@ -12,6 +12,7 @@ public class InformacioSimulacio
     public string dataCreacio;
 
     public float probabilitatMutacio = 10f;
+    public float infeccioHumans = 1f;
 
     public float tempsMaxim = -1;
     public float tempsTotal;
