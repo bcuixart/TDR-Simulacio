@@ -15,7 +15,7 @@ Passats 30 segons de simulació, un individu a l'atzar s'infectarà amb un virus
 
 Un cop acabada una simulació, es poden visualitzar gràfics amb informació sobre la població de les diferents espècies, el percentatge d'infectats i l'evolució del gen de salut respecte el temps.
 
-# Imatges (Afegides el 28.03.2025)
+## Imatges (Afegides el 28.03.2025)
 ![Menú principal](https://i.imgur.com/lWX9uMt.png)
 
 ![Escenari](https://i.imgur.com/dlNQ5Xk.png)
